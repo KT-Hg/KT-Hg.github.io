@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Khuu Tan Hoang — QC Engineer (Manual &amp; Automation)</title>
+<meta name="description" content="Portfolio of Khuu Tan Hoang, QC Engineer (Manual &amp; Automation) in Ho Chi Minh City: 1.5+ years testing B2C e-commerce web &amp; mobile products, payment-flow testing, and Pocket QA — a published Chrome test-automation extension.">
+<meta name="author" content="Khuu Tan Hoang">
+<meta name="theme-color" content="#1f4e79">
+
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Khuu Tan Hoang — QC Engineer (Manual &amp; Automation)">
+<meta property="og:description" content="1.5+ years testing B2C e-commerce web &amp; mobile products in Japanese IT outsourcing. Payment-flow testing, API &amp; SQL verification, and Pocket QA — a published Chrome test-automation extension.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="vi_VN">
+<meta property="og:url" content="https://kt-hg.github.io/">
+<link rel="canonical" href="https://kt-hg.github.io/">
+<!-- Ảnh xem trước khi chia sẻ link (tuỳ chọn): thêm og-image.jpg 1200×630 vào repo rồi bỏ comment dòng dưới -->
+<!-- <meta property="og:image" content="https://kt-hg.github.io/og-image.jpg"> -->
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4e79'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='26' fill='%23fff'%3EKH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap">
+
+<script>
+  // Runs before paint: pick language + theme so there is no flash.
+  (() => {
+    const d = document.documentElement;
+    const get = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+    d.classList.add('js');
+    d.lang = get('lang') || (/^vi\b/i.test(navigator.language || '') ? 'vi' : 'en');
+    const en = document.title, vi = en.replace('Khuu Tan Hoang', 'Khưu Tấn Hoàng');
+    (window.syncTitle = () => { document.title = d.lang === 'vi' ? vi : en; })();
+    d.dataset.theme = get('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  })();
+</script>
+
+<style>
+  :root {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --surface-2: #f1f5f9;
+    --text: #0f172a;
+    --muted: #556070;
+    --border: #e2e8f0;
+    --primary: #1f4e79;
+    --primary-ink: #ffffff;
+    --primary-soft: #e8f0f8;
+    --accent: #c2410c;
+    --accent-fill: #ea7a2e;
+    --accent-soft: #fff1e6;
+    --shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 24px rgba(15, 23, 42, .06);
+    --radius: 14px;
+    --header-h: 64px;
+    --sy: 0px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b1220; --surface: #111a2d; --surface-2: #17223a; --text: #e6ebf3; --muted: #9ba7b9;
+      --border: #24314b; --primary: #8fbbe9; --primary-ink: #0b1220; --primary-soft: rgba(143, 187, 233, .12);
+      --accent: #fb923c; --accent-fill: #fb923c; --accent-soft: rgba(251, 146, 60, .12);
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b1220; --surface: #111a2d; --surface-2: #17223a; --text: #e6ebf3; --muted: #9ba7b9;
+    --border: #24314b; --primary: #8fbbe9; --primary-ink: #0b1220; --primary-soft: rgba(143, 187, 233, .12);
+    --accent: #fb923c; --accent-fill: #fb923c; --accent-soft: rgba(251, 146, 60, .12);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+    color-scheme: dark;
+  }
+
+  /* Taller desktop screens: text and vertical rhythm grow so content fills the screen instead of leaving it empty */
+  @media (min-width: 1024px) {
+    html { font-size: clamp(100%, calc(100% + (100vh - 700px) / 60), 112.5%); }
+    :root { --sy: clamp(0px, calc((100vh - 700px) / 4), 48px); }
+  }
+
+  /* Bilingual: every text exists as lang="en" + lang="vi"; show only the active one */
+  html[lang="en"] body [lang="vi"],
+  html[lang="vi"] body [lang="en"] { display: none !important; }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 1rem/1.7 "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color .2s, color .2s;
+  }
+  h1, h2, h3 { margin: 0; line-height: 1.2; letter-spacing: -.01em; }
+  p { margin: 0; }
+  a { color: var(--primary); }
+  :focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 3px; border-radius: 6px; }
+
+  .container { width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: 16px; }
+  @media (min-width: 640px) { .container { padding-inline: 24px; } }
+
+  .skip { position: absolute; left: -999px; top: 12px; z-index: 100; background: var(--surface); color: var(--text); padding: 8px 14px; border-radius: 8px; }
+  .skip:focus { left: 16px; }
+
+  .i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- Header ---------- */
+  .site-header {
+    position: fixed; inset: 0 0 auto; z-index: 50; height: var(--header-h);
+    background: var(--bg);
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: saturate(1.4) blur(12px);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 100%; }
+  .brand { font-weight: 700; color: var(--text); text-decoration: none; white-space: nowrap; }
+  .nav-links { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { display: block; padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 500; }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--surface-2); }
+  .nav-tools { display: flex; align-items: center; gap: 8px; }
+  .icon-btn {
+    height: 38px; min-width: 38px; padding: 0 10px; display: inline-grid; place-items: center;
+    border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text);
+    font-family: inherit; font-size: .8rem; font-weight: 600; cursor: pointer;
+  }
+  .icon-btn:hover { border-color: var(--primary); }
+  .i-sun { display: none; }
+  [data-theme="dark"] .i-sun { display: block; }
+  [data-theme="dark"] .i-moon { display: none; }
+  html:not(.js) .js-only { display: none; }
+  .menu-btn { display: none; }
+
+  @media (max-width: 900px) {
+    .menu-btn { display: inline-grid; }
+    .nav-links {
+      display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column;
+      padding: 8px 16px 16px; background: var(--bg); border-bottom: 1px solid var(--border); box-shadow: var(--shadow);
+    }
+    .nav-open .nav-links { display: flex; }
+    .nav-links a { padding: 12px; }
+  }
+
+  /* ---------- Sections ---------- */
+  /* One section = one screen: the next section never peeks in below */
+  section {
+    padding-block: clamp(24px, 3vw, 32px) 24px; scroll-margin-top: var(--header-h);
+    min-height: calc(100vh - var(--header-h)); min-height: calc(100svh - var(--header-h));
+    display: flex; flex-direction: column; justify-content: center; /* spare height splits above/below instead of piling up at the bottom */
+  }
+  .alt { background: var(--surface); border-block: 1px solid var(--border); }
+  .section-head { margin-bottom: calc(clamp(16px, 2vw, 20px) + var(--sy) / 2); }
+  .eyebrow { display: flex; align-items: center; gap: 10px; font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--accent-fill); }
+  .section-title { margin-top: 6px; font-size: clamp(1.6rem, 2.8vw, 2rem); font-weight: 700; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: calc(clamp(18px, 2.2vw, 24px) + var(--sy) / 4); box-shadow: var(--shadow); }
+  .alt .card { background: var(--bg); }
+  .label { font-size: .76rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .muted { color: var(--muted); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .tags li { padding: 3px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-2); font-size: .8rem; font-weight: 500; }
+
+  .checks { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .checks li { position: relative; padding-left: 28px; }
+  .checks li::before {
+    content: ""; position: absolute; left: 2px; top: .5em; width: 12px; height: 6px;
+    border-left: 2px solid var(--accent-fill); border-bottom: 2px solid var(--accent-fill); transform: rotate(-45deg);
+  }
+  @media (min-width: 900px) {
+    .checks.cols { display: block; columns: 2; column-gap: 24px; }
+    .checks.cols li { break-inside: avoid; margin-bottom: calc(8px + var(--sy) / 4); }
+  }
+
+  /* Small screens: hide .more items until "Read more" is pressed (only when JS can toggle them back) */
+  .more-btn {
+    display: none; margin-top: 12px; padding: 7px 14px; border: 1px solid var(--border); border-radius: 10px;
+    background: var(--surface); color: var(--primary); font-family: inherit; font-size: .88rem; font-weight: 600; cursor: pointer;
+  }
+  .more-btn .l-less, .expanded .more-btn .l-more { display: none; }
+  .expanded .more-btn .l-less { display: inline; }
+  @media (max-width: 767px) {
+    .js .collapsible:not(.expanded) .more { display: none; }
+    .js .more-btn { display: inline-block; }
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border: 1px solid transparent; border-radius: 10px;
+    font-weight: 600; text-decoration: none; transition: transform .15s, border-color .15s;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--primary); color: var(--primary-ink); }
+  .btn-ghost { background: var(--surface); color: var(--text); border-color: var(--border); }
+  .btn-ghost:hover { border-color: var(--primary); }
+  .btn-sm { padding: 7px 12px; font-size: .86rem; }
+  .btn-sm .i { width: 16px; height: 16px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; overflow: hidden; padding-top: calc(var(--header-h) + clamp(28px, 3.5vw, 40px)); padding-bottom: clamp(28px, 3.5vw, 40px);
+    min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(var(--border) 1.2px, transparent 1.2px); background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 65% at 75% 35%, #000 25%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 65% at 75% 35%, #000 25%, transparent 75%);
+  }
+  .hero .container { position: relative; }
+
+  /* Decorative test-checklist illustration, right side of the hero (wide screens only) */
+  .hero-deco { display: none; width: 100%; height: auto; overflow: visible; }
+  @media (min-width: 1024px) {
+    .hero .container { display: grid; grid-template-columns: minmax(0, 1fr) clamp(260px, 30%, 360px); gap: 48px; align-items: center; }
+    .hero-deco { display: block; }
+  }
+  .hero-deco .d-soft { fill: var(--primary-soft); }
+  .hero-deco .d-ring { fill: none; stroke: var(--border); stroke-width: 1.5; stroke-dasharray: 4 8; }
+  .hero-deco .d-card { fill: var(--surface); stroke: var(--border); filter: drop-shadow(0 14px 28px rgba(15, 23, 42, .10)); }
+  .hero-deco .d-bar { fill: var(--border); }
+  .hero-deco .d-box { fill: var(--primary-soft); }
+  .hero-deco .d-check { fill: none; stroke: var(--primary); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .hero-deco .d-accent { fill: var(--accent-fill); }
+  .hero-deco .d-primary { fill: var(--primary); }
+  .hero-deco .d-ink { fill: none; stroke: var(--primary-ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .hero-deco .d-ink-bar { fill: var(--primary-ink); opacity: .55; }
+  .status { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .85rem; font-weight: 600; }
+  .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-fill); }
+  .hero h1 { margin-top: 16px; font-size: clamp(2.4rem, 6.5vw, 4.25rem); font-weight: 700; letter-spacing: -.025em; }
+  .hero .role { margin-top: 10px; font-size: clamp(1.1rem, 2.2vw, 1.4rem); font-weight: 600; color: var(--primary); }
+  .hero .lead { max-width: 58ch; margin-top: 16px; font-size: clamp(1.02rem, 1.6vw, 1.15rem); color: var(--muted); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 16px 20px; margin: 24px 0 0; padding: 0; list-style: none; }
+  .stats strong { display: block; font-size: 1.35rem; font-weight: 700; line-height: 1.3; }
+  .stats span { font-size: .82rem; color: var(--muted); }
+
+  /* ---------- About ---------- */
+  .about-grid { display: grid; grid-template-columns: 1fr 320px; gap: 40px; align-items: start; }
+  .about-text p { max-width: 72ch; margin-bottom: .9em; }
+  .facts { display: grid; gap: calc(12px + var(--sy) / 4); margin: 0; }
+  .facts dd { margin: 2px 0 0; font-weight: 500; }
+  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* ---------- Experience timeline ---------- */
+  .timeline { --tl: 32px; position: relative; margin: 0; padding: 0 0 0 var(--tl); list-style: none; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+  .tl-item { position: relative; }
+  .tl-item + .tl-item { margin-top: 24px; }
+  .tl-item::before { content: ""; position: absolute; left: calc(-1 * var(--tl)); top: 26px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 3px solid var(--accent-fill); }
+  @media (max-width: 640px) { .timeline { --tl: 22px; } }
+  .tl-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; }
+  .tl-head h3 { font-size: 1.3rem; }
+  .date { padding: 4px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: .85rem; font-weight: 600; white-space: nowrap; }
+  .company { margin-top: 6px; font-weight: 600; }
+  .tl-meta { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; margin-top: 6px; }
+  .tl-meta .company { margin: 0; }
+  .steps { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .steps li { padding: 3px 12px; border: 1px solid var(--border); border-radius: 999px; font-size: .82rem; color: var(--muted); }
+  .steps b { color: var(--text); font-weight: 600; }
+  .tl-body { margin-top: calc(14px + var(--sy) / 4); padding-top: calc(14px + var(--sy) / 4); border-top: 1px solid var(--border); }
+  .tl-body .label { display: block; margin-bottom: 10px; }
+  .tl-body .checks { font-size: .92rem; line-height: 1.55; }
+
+  /* ---------- Projects ---------- */
+  .projects { display: grid; grid-template-columns: 2.5fr 1fr; gap: 20px; }
+  @media (max-width: 900px) { .projects { grid-template-columns: 1fr; } }
+  .project { display: flex; flex-direction: column; gap: calc(10px + var(--sy) / 4); font-size: .92rem; line-height: 1.55; }
+  .project-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  .project-top .badge { margin-left: auto; }
+  .badge { padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .76rem; font-weight: 600; }
+  .project h3 { font-size: 1.2rem; }
+  .project .checks { gap: calc(8px + var(--sy) / 5); }
+  .project-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto; padding-top: 6px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* ---------- Skills ---------- */
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: calc(16px + var(--sy) / 3); }
+  .skill h3 { font-size: 1rem; }
+  .skill .hint { margin: 2px 0 12px; font-size: .84rem; color: var(--muted); }
+
+  /* ---------- Education ---------- */
+  @media (min-width: 900px) {
+    .edu { display: grid; grid-template-columns: auto 1fr minmax(260px, 34%); gap: 24px; align-items: center; }
+    .edu .edu-icon { margin: 0; }
+    .edu .edu-side { margin: 0; padding: 0 0 0 24px; border-top: 0; border-left: 1px solid var(--border); }
+  }
+  .edu-icon { width: 44px; height: 44px; margin-bottom: 14px; border-radius: 12px; display: grid; place-items: center; background: var(--primary-soft); color: var(--primary); }
+  .edu-icon .i { width: 24px; height: 24px; }
+  .edu h3 { font-size: 1.25rem; }
+
+  /* ---------- Contact ---------- */
+  .contact-lead { max-width: 60ch; margin-top: 14px; font-size: 1.08rem; color: var(--muted); }
+  .contact-grid { display: grid; grid-template-columns: 1fr; gap: calc(16px + var(--sy) / 3); }
+  @media (min-width: 700px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+  .contact-item {
+    display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--surface); color: var(--text); text-decoration: none; transition: border-color .15s, transform .15s;
+  }
+  a.contact-item:hover { border-color: var(--primary); transform: translateY(-2px); }
+  .contact-item .ic { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--primary-soft); color: var(--primary); flex: none; }
+  .contact-item small { display: block; font-size: .74rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .contact-item span { font-weight: 600; overflow-wrap: anywhere; }
+  .contact-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+  footer { padding: 28px 0; border-top: 1px solid var(--border); font-size: .9rem; color: var(--muted); }
+  footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+  footer a { color: var(--muted); }
+
+  /* ---------- Fade-in on scroll ---------- */
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .btn, .contact-item { transition: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="vi">Bỏ qua tới nội dung</span></a>
+
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="#top"><span lang="en">Khuu Tan Hoang</span><span lang="vi">Khưu Tấn Hoàng</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about"><span lang="en">About</span><span lang="vi">Giới thiệu</span></a></li>
+      <li><a href="#experience"><span lang="en">Experience</span><span lang="vi">Kinh nghiệm</span></a></li>
+      <li><a href="#projects"><span lang="en">Projects</span><span lang="vi">Dự án</span></a></li>
+      <li><a href="#skills"><span lang="en">Skills</span><span lang="vi">Kỹ năng</span></a></li>
+      <li><a href="#education"><span lang="en">Education</span><span lang="vi">Học vấn</span></a></li>
+      <li><a href="#contact"><span lang="en">Contact</span><span lang="vi">Liên hệ</span></a></li>
+    </ul>
+    <div class="nav-tools">
+      <button class="icon-btn js-only" id="lang-btn" type="button" aria-label="Switch language / Đổi ngôn ngữ">
+        <span lang="en">VI</span><span lang="vi">EN</span>
+      </button>
+      <button class="icon-btn js-only" id="theme-btn" type="button" aria-label="Toggle dark mode / Đổi giao diện sáng tối">
+        <svg class="i i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <svg class="i i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="icon-btn menu-btn js-only" id="menu-btn" type="button" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="reveal">
+        <span class="status"><span lang="en">Open to Manual + Automation QC roles</span><span lang="vi">Đang tìm vị trí QC Manual + Automation</span></span>
+        <h1><span lang="en">Khuu Tan Hoang</span><span lang="vi">Khưu Tấn Hoàng</span></h1>
+        <p class="role">QC Engineer — Manual &amp; Automation</p>
+        <p class="lead">
+          <span lang="en">I test B2C e-commerce products on web &amp; mobile, own payment-flow testing on my assigned flows, and built Pocket QA — a published Chrome test-automation extension.</span>
+          <span lang="vi">Tôi kiểm thử sản phẩm thương mại điện tử B2C trên web &amp; mobile, phụ trách kiểm thử luồng thanh toán được giao, và tự xây dựng Pocket QA — tiện ích Chrome tự động hoá kiểm thử đã phát hành.</span>
+        </p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#contact">
+            <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <span lang="en">Contact me</span><span lang="vi">Liên hệ</span>
+          </a>
+          <a class="btn btn-ghost" href="CV%20-%20Khuu%20Tan%20Hoang%20-%20QA-QC%20Engineer.pdf" download="CV - Khuu Tan Hoang - QA-QC Engineer.pdf">
+            <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg>
+            <span lang="en">Download CV</span><span lang="vi">Tải CV</span>
+          </a>
+        </div>
+        <ul class="stats">
+          <li><strong>1.5+</strong><span lang="en">years in Japanese IT outsourcing</span><span lang="vi">năm trong IT outsourcing Nhật Bản</span></li>
+          <li><strong>2</strong><span lang="en">B2C e-commerce products tested</span><span lang="vi">sản phẩm TMĐT B2C đã kiểm thử</span></li>
+          <li><strong>Web · Android · iOS</strong><span lang="en">tested every sprint</span><span lang="vi">kiểm thử mỗi sprint</span></li>
+        </ul>
+      </div>
+      <svg class="hero-deco reveal" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+        <circle class="d-soft" cx="210" cy="205" r="170"/>
+        <circle class="d-ring" cx="210" cy="205" r="192"/>
+        <rect class="d-accent" x="300" y="38" width="54" height="54" rx="14" transform="rotate(12 327 65)"/>
+        <circle class="d-primary" cx="62" cy="328" r="16"/>
+        <g class="d-accent">
+          <circle cx="40" cy="70" r="3"/><circle cx="56" cy="70" r="3"/><circle cx="72" cy="70" r="3"/>
+          <circle cx="40" cy="86" r="3"/><circle cx="56" cy="86" r="3"/><circle cx="72" cy="86" r="3"/>
+        </g>
+        <!-- checklist card -->
+        <rect class="d-card" x="70" y="96" width="270" height="222" rx="20"/>
+        <circle class="d-bar" cx="98" cy="124" r="5"/><circle class="d-bar" cx="114" cy="124" r="5"/><circle class="d-bar" cx="130" cy="124" r="5"/>
+        <rect class="d-bar" x="150" y="119" width="92" height="10" rx="5"/>
+        <rect class="d-box" x="96" y="150" width="24" height="24" rx="7"/><path class="d-check" d="M102 162l4.5 4.5 8-8.5"/>
+        <rect class="d-bar" x="134" y="157" width="150" height="10" rx="5"/>
+        <rect class="d-box" x="96" y="190" width="24" height="24" rx="7"/><path class="d-check" d="M102 202l4.5 4.5 8-8.5"/>
+        <rect class="d-bar" x="134" y="197" width="118" height="10" rx="5"/>
+        <rect class="d-box" x="96" y="230" width="24" height="24" rx="7"/><circle class="d-accent" cx="108" cy="242" r="5"/>
+        <rect class="d-bar" x="134" y="237" width="168" height="10" rx="5"/>
+        <rect class="d-box" x="96" y="270" width="24" height="24" rx="7"/><path class="d-check" d="M102 282l4.5 4.5 8-8.5"/>
+        <rect class="d-bar" x="134" y="277" width="96" height="10" rx="5"/>
+        <!-- floating "passed" pill -->
+        <rect class="d-primary" x="252" y="296" width="112" height="40" rx="20"/>
+        <path class="d-ink" d="M272 316l5 5 9-10"/>
+        <rect class="d-ink-bar" x="296" y="311" width="50" height="10" rx="5"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="alt" id="about">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">01 · <span lang="en">About</span><span lang="vi">Giới thiệu</span></span>
+        <h2 class="section-title"><span lang="en">A bit about me</span><span lang="vi">Đôi nét về tôi</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text collapsible reveal">
+          <p lang="en">Hi, I'm Hoang — a QC Engineer with 1.5+ years in Japanese IT outsourcing. At Lampart, I test B2C e-commerce products on web and mobile, working in Agile teams of 15–30 people.</p>
+          <p class="more" lang="en">On the payment side, I own the testing of the authentication and payment steps for new payment methods on the flows assigned to me: GMO credit card with 3-D Secure, Amazon Pay, refunds, cancellations, 8%/10% tax rounding and promotions. I also verify what happens below the UI — testing APIs with Postman and writing SQL on MySQL and SQL Server to reconcile order totals between the API and the database.</p>
+          <p class="more" lang="en">As a personal project, I built Pocket QA, a Chrome extension published on the Chrome Web Store that records a tester's actions and replays them as regression tests. I graduated in Information Technology from HCMUS in 10/2025, and I'm now looking for a QC role that combines manual testing with automation.</p>
+
+          <p lang="vi">Xin chào, tôi là Hoàng — QC Engineer với hơn 1,5 năm kinh nghiệm trong lĩnh vực IT outsourcing Nhật Bản. Tại Lampart, tôi kiểm thử các sản phẩm thương mại điện tử B2C trên web và mobile, làm việc trong các nhóm Agile quy mô 15–30 người.</p>
+          <p class="more" lang="vi">Ở mảng thanh toán, tôi phụ trách kiểm thử bước xác thực và thanh toán cho các phương thức thanh toán mới trên những luồng được giao: thẻ tín dụng GMO (3-D Secure), Amazon Pay, hoàn tiền, huỷ đơn, làm tròn thuế 8%/10% và khuyến mãi. Tôi cũng kiểm tra cả phần bên dưới giao diện — test API bằng Postman và viết SQL trên MySQL, SQL Server để đối soát tổng tiền đơn hàng giữa API và database.</p>
+          <p class="more" lang="vi">Là một dự án cá nhân, tôi đã xây dựng Pocket QA — tiện ích Chrome phát hành trên Chrome Web Store, ghi lại thao tác của tester và phát lại thành các bài kiểm thử hồi quy. Tôi tốt nghiệp ngành Công nghệ Thông tin tại HCMUS vào 10/2025 và đang tìm kiếm vị trí QC kết hợp kiểm thử thủ công với tự động hoá.</p>
+          <button class="more-btn" type="button" aria-expanded="false"><span class="l-more"><span lang="en">Read more</span><span lang="vi">Xem thêm</span></span><span class="l-less"><span lang="en">Show less</span><span lang="vi">Thu gọn</span></span></button>
+        </div>
+        <dl class="card facts reveal">
+          <div><dt class="label"><span lang="en">Location</span><span lang="vi">Nơi ở</span></dt><dd><span lang="en">Ho Chi Minh City</span><span lang="vi">TP. Hồ Chí Minh</span></dd></div>
+          <div><dt class="label"><span lang="en">Currently</span><span lang="vi">Hiện tại</span></dt><dd>QC Engineer · Lampart Co., Ltd.</dd></div>
+          <div><dt class="label"><span lang="en">Education</span><span lang="vi">Học vấn</span></dt><dd><span lang="en">B.Sc. in IT — HCMUS (2025)</span><span lang="vi">Cử nhân CNTT — HCMUS (2025)</span></dd></div>
+          <div><dt class="label"><span lang="en">English</span><span lang="vi">Tiếng Anh</span></dt><dd><span lang="en">Intermediate (reading specifications)</span><span lang="vi">Trung cấp (đọc tài liệu đặc tả)</span></dd></div>
+          <div><dt class="label"><span lang="en">Looking for</span><span lang="vi">Đang tìm</span></dt><dd><span lang="en">Manual + Automation QC role</span><span lang="vi">Vị trí QC Manual + Automation</span></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">02 · <span lang="en">Experience</span><span lang="vi">Kinh nghiệm</span></span>
+        <h2 class="section-title"><span lang="en">Work experience</span><span lang="vi">Kinh nghiệm làm việc</span></h2>
+      </div>
+      <ol class="timeline">
+        <li class="tl-item card reveal">
+          <div class="tl-head">
+            <h3>QC Engineer</h3>
+            <span class="date">02/2025 – <span lang="en">Present</span><span lang="vi">Nay</span></span>
+          </div>
+          <div class="tl-meta">
+            <p class="company">Lampart Co., Ltd. <span class="muted">· <span lang="en">Ho Chi Minh City · Japanese IT outsourcing</span><span lang="vi">TP. Hồ Chí Minh · IT outsourcing Nhật Bản</span></span></p>
+            <ul class="steps">
+              <li><b>02/2025</b> · <span lang="en">Intern</span><span lang="vi">Thực tập sinh</span></li>
+              <li><b>04/2025</b> · <span lang="en">Full-time</span><span lang="vi">Nhân viên chính thức</span></li>
+            </ul>
+          </div>
+          <div class="tl-body collapsible">
+            <ul class="checks cols">
+              <li>
+                <span lang="en">Owned testing of the authentication and payment steps for new payment methods on assigned flows, including <strong>GMO credit card (3-D Secure)</strong> and <strong>Amazon Pay</strong>: refunds, cancellations, 8%/10% tax rounding, promotions.</span>
+                <span lang="vi">Phụ trách kiểm thử bước xác thực và thanh toán cho các phương thức thanh toán mới trên những luồng được giao, gồm <strong>thẻ tín dụng GMO (3-D Secure)</strong> và <strong>Amazon Pay</strong>: hoàn tiền, huỷ đơn, làm tròn thuế 8%/10%, khuyến mãi.</span>
+              </li>
+              <li>
+                <span lang="en">Tested <strong>two B2C e-commerce web &amp; mobile products</strong> (15 and 4 months) in teams of 15–30 people with 4–9 QCs.</span>
+                <span lang="vi">Kiểm thử <strong>hai sản phẩm thương mại điện tử B2C trên web &amp; mobile</strong> (15 và 4 tháng) trong các nhóm 15–30 người với 4–9 QC.</span>
+              </li>
+              <li class="more">
+                <span lang="en">Ran functional and regression testing each sprint on web and Android/iOS (real devices, DevTools emulator); supported client UAT by investigating issues and verifying fixes on production.</span>
+                <span lang="vi">Thực hiện kiểm thử chức năng và hồi quy mỗi sprint trên web và Android/iOS (thiết bị thật, giả lập DevTools); hỗ trợ khách hàng UAT bằng cách điều tra lỗi và xác minh bản sửa trên production.</span>
+              </li>
+              <li class="more">
+                <span lang="en">Conducted <strong>API testing with Postman</strong>; wrote <strong>SQL</strong> (JOINs across 4–5 tables, subqueries, GROUP BY/HAVING) on MySQL and SQL Server to verify CSV imports and reconcile order totals between API and database.</span>
+                <span lang="vi"><strong>Kiểm thử API bằng Postman</strong>; viết <strong>SQL</strong> (JOIN 4–5 bảng, subquery, GROUP BY/HAVING) trên MySQL và SQL Server để xác minh dữ liệu import CSV và đối soát tổng tiền đơn hàng giữa API và database.</span>
+              </li>
+              <li class="more">
+                <span lang="en">Reviewed BA documents to identify requirement gaps; maintained test cases/plans in Excel &amp; Google Sheets and tracked defects via Redmine through the full lifecycle.</span>
+                <span lang="vi">Review tài liệu BA để phát hiện thiếu sót trong yêu cầu; duy trì test case/test plan trên Excel &amp; Google Sheets và theo dõi lỗi trên Redmine trong suốt vòng đời lỗi.</span>
+              </li>
+              <li class="more">
+                <span lang="en">Created QA checklist templates, helped document the payment business flow and onboarded a new QC member.</span>
+                <span lang="vi">Tạo mẫu QA checklist, hỗ trợ viết tài liệu luồng nghiệp vụ thanh toán và hướng dẫn một thành viên QC mới hoà nhập.</span>
+              </li>
+            </ul>
+            <button class="more-btn" type="button" aria-expanded="false"><span class="l-more"><span lang="en">Read more</span><span lang="vi">Xem thêm</span></span><span class="l-less"><span lang="en">Show less</span><span lang="vi">Thu gọn</span></span></button>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section class="alt" id="projects">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">03 · <span lang="en">Projects</span><span lang="vi">Dự án</span></span>
+        <h2 class="section-title"><span lang="en">Featured projects</span><span lang="vi">Dự án nổi bật</span></h2>
+      </div>
+      <div class="collapsible">
+        <div class="projects">
+          <article class="card project reveal">
+            <div class="project-top">
+              <span class="date">12/2025 – <span lang="en">Present</span><span lang="vi">Nay</span></span>
+              <span class="muted"><span lang="en">Role: QA / Developer · Solo project</span><span lang="vi">Vai trò: QA / Developer · Thực hiện độc lập</span></span>
+              <span class="badge"><span lang="en">Published on Chrome Web Store</span><span lang="vi">Đã phát hành trên Chrome Web Store</span></span>
+            </div>
+            <h3>Pocket QA — Web Test Automation Extension</h3>
+            <p>
+              <span lang="en">Self-built Chrome extension that records a tester's actions and replays them as regression tests, with a pass/fail result and a ready-to-paste bug report.</span>
+              <span lang="vi">Tiện ích Chrome tự xây dựng, ghi lại thao tác của tester rồi phát lại thành các bài kiểm thử hồi quy, kèm kết quả pass/fail và bug report sẵn sàng để dán.</span>
+            </p>
+            <ul class="checks more">
+              <li>
+                <span lang="en">17 action types (iframes, assertions, conditions, branching); data-driven (CSV), sequenced and scheduled runs.</span>
+                <span lang="vi">17 loại hành động (iframe, assertion, điều kiện, rẽ nhánh); chạy theo dữ liệu (CSV), chạy tuần tự và theo lịch.</span>
+              </li>
+              <li>
+                <span lang="en">Reports each run as Passed / Failed / Test broken, with a Markdown bug report (repro steps, screenshot), image diff and XLSX/HTML/ZIP export.</span>
+                <span lang="vi">Báo cáo mỗi lần chạy theo trạng thái Passed / Failed / Test broken, kèm bug report Markdown (các bước tái hiện, ảnh chụp màn hình), so sánh ảnh (image diff) và xuất XLSX/HTML/ZIP.</span>
+              </li>
+              <li>
+                <span lang="en">Built-in test design (Equivalence Partitioning, Boundary Value Analysis, decision tables); exports tests to Selenium (Python, Java), Playwright and Robot Framework.</span>
+                <span lang="vi">Tích hợp thiết kế test (Phân vùng tương đương, Phân tích giá trị biên, bảng quyết định); xuất test sang Selenium (Python, Java), Playwright và Robot Framework.</span>
+              </li>
+            </ul>
+            <div class="project-foot">
+              <ul class="tags">
+                <li>JavaScript ES6+</li><li>Chrome Extension MV3</li><li>CDP</li><li>SQL</li>
+              </ul>
+              <div class="links">
+                <a class="btn btn-primary btn-sm" href="https://chromewebstore.google.com/detail/pocket-qa/hghkokkjbpedgjbpohpkgmejkeobocam" target="_blank" rel="noopener">
+                  Chrome Web Store
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+                </a>
+                <a class="btn btn-ghost btn-sm" href="https://kt-hg.github.io/Promo--Pocket-QA/" target="_blank" rel="noopener">
+                  Demo
+                  <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+  
+          <article class="card project more reveal">
+            <div class="project-top">
+              <span class="date">12/2024</span>
+              <span class="muted"><span lang="en">Role: QA · Solo project</span><span lang="vi">Vai trò: QA · Thực hiện độc lập</span></span>
+              <span class="badge"><span lang="en">Training project</span><span lang="vi">Dự án đào tạo</span></span>
+            </div>
+            <h3>Tool Shop</h3>
+            <p>
+              <span lang="en">Tested an online e-commerce platform: Functional, UI, Performance and API testing; automated selected regression cases.</span>
+              <span lang="vi">Kiểm thử một nền tảng thương mại điện tử trực tuyến: kiểm thử chức năng, UI, hiệu năng và API; tự động hoá một số test case hồi quy chọn lọc.</span>
+            </p>
+            <div class="project-foot">
+              <ul class="tags">
+                <li>Katalon</li><li>Postman</li><li>JMeter</li><li>BrowserStack</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+        <button class="more-btn" type="button" aria-expanded="false"><span class="l-more"><span lang="en">Read more</span><span lang="vi">Xem thêm</span></span><span class="l-less"><span lang="en">Show less</span><span lang="vi">Thu gọn</span></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SKILLS ================= -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">04 · <span lang="en">Skills</span><span lang="vi">Kỹ năng</span></span>
+        <h2 class="section-title"><span lang="en">Skills &amp; tools</span><span lang="vi">Kỹ năng &amp; công cụ</span></h2>
+      </div>
+      <div class="collapsible">
+        <div class="skills">
+          <div class="card skill reveal">
+            <h3><span lang="en">Testing types</span><span lang="vi">Loại kiểm thử</span></h3>
+            <p class="hint"><span lang="en">Core expertise</span><span lang="vi">Chuyên môn chính</span></p>
+            <ul class="tags"><li>Manual Testing</li><li>API Testing</li><li>Database Testing</li><li>Mobile Testing</li><li>Regression</li><li>UI</li><li>UAT</li></ul>
+          </div>
+          <div class="card skill reveal">
+            <h3><span lang="en">Testing &amp; tracking</span><span lang="vi">Công cụ kiểm thử &amp; quản lý lỗi</span></h3>
+            <p class="hint"><span lang="en">Used on client projects at Lampart</span><span lang="vi">Dùng trong dự án thực tế tại Lampart</span></p>
+            <ul class="tags"><li>Postman</li><li>Chrome DevTools</li><li>Redmine</li><li>Excel</li><li>Google Sheets</li></ul>
+          </div>
+          <div class="card skill reveal">
+            <h3><span lang="en">Automation (personal)</span><span lang="vi">Tự động hoá (cá nhân)</span></h3>
+            <p class="hint"><span lang="en">Used in personal projects</span><span lang="vi">Dùng trong dự án cá nhân</span></p>
+            <ul class="tags"><li>Playwright</li><li>Selenium</li></ul>
+          </div>
+          <div class="card skill more reveal">
+            <h3><span lang="en">Code &amp; databases</span><span lang="vi">Lập trình &amp; cơ sở dữ liệu</span></h3>
+            <p class="hint"><span lang="en">Languages, databases &amp; version control</span><span lang="vi">Ngôn ngữ, CSDL &amp; quản lý phiên bản</span></p>
+            <ul class="tags"><li>JavaScript</li><li>C#</li><li>Python</li><li>MySQL</li><li>SQL Server</li><li>Git</li></ul>
+          </div>
+          <div class="card skill more reveal">
+            <h3><span lang="en">Tools from training</span><span lang="vi">Công cụ từ khoá đào tạo</span></h3>
+            <p class="hint"><span lang="en">Used in the Tool Shop training project</span><span lang="vi">Dùng trong dự án đào tạo Tool Shop</span></p>
+            <ul class="tags"><li>Katalon</li><li>JMeter</li><li>BrowserStack</li></ul>
+          </div>
+          <div class="card skill more reveal">
+            <h3><span lang="en">Languages</span><span lang="vi">Ngoại ngữ</span></h3>
+            <p class="hint"><span lang="en">Working language</span><span lang="vi">Ngôn ngữ làm việc</span></p>
+            <ul class="tags"><li><span lang="en">English – Intermediate (reading specifications)</span><span lang="vi">Tiếng Anh – Trung cấp (đọc tài liệu đặc tả)</span></li></ul>
+          </div>
+        </div>
+        <button class="more-btn" type="button" aria-expanded="false"><span class="l-more"><span lang="en">Read more</span><span lang="vi">Xem thêm</span></span><span class="l-less"><span lang="en">Show less</span><span lang="vi">Thu gọn</span></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EDUCATION ================= -->
+  <section class="alt" id="education">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">05 · <span lang="en">Education</span><span lang="vi">Học vấn</span></span>
+        <h2 class="section-title"><span lang="en">Education</span><span lang="vi">Học vấn</span></h2>
+      </div>
+      <article class="card edu reveal">
+        <div class="edu-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/></svg></div>
+        <div class="edu-main">
+          <div class="tl-head">
+            <h3><span lang="en">VNUHCM – University of Science (HCMUS)</span><span lang="vi">Trường ĐH Khoa học Tự nhiên – ĐHQG-HCM (HCMUS)</span></h3>
+            <span class="date">2021 – 2025</span>
+          </div>
+          <p class="company"><span lang="en">B.Sc. in Information Technology</span><span lang="vi">Cử nhân Công nghệ Thông tin</span></p>
+          <p class="muted"><span lang="en">Graduated 10/2025</span><span lang="vi">Tốt nghiệp 10/2025</span></p>
+        </div>
+        <div class="tl-body edu-side">
+          <span class="label"><span lang="en">Relevant coursework</span><span lang="vi">Môn học liên quan</span></span>
+          <ul class="tags">
+            <li><span lang="en">Software Testing</span><span lang="vi">Kiểm thử phần mềm</span></li>
+            <li><span lang="en">Database Systems</span><span lang="vi">Hệ cơ sở dữ liệu</span></li>
+            <li><span lang="en">OOP</span><span lang="vi">Lập trình hướng đối tượng</span></li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">06 · <span lang="en">Contact</span><span lang="vi">Liên hệ</span></span>
+        <h2 class="section-title"><span lang="en">Get in touch</span><span lang="vi">Liên hệ với tôi</span></h2>
+        <p class="contact-lead">
+          <span lang="en">I'm looking for a manual + automation QC role. Feel free to reach me by email or phone.</span>
+          <span lang="vi">Tôi đang tìm kiếm vị trí QC kết hợp manual và automation. Hãy liên hệ với tôi qua email hoặc điện thoại.</span>
+        </p>
+      </div>
+      <div class="contact-grid reveal">
+        <a class="contact-item" href="mailto:kthoangst1@gmail.com">
+          <span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <div><small>Email</small><span>kthoangst1@gmail.com</span></div>
+        </a>
+        <a class="contact-item" href="tel:+84375300990">
+          <span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
+          <div><small><span lang="en">Phone</span><span lang="vi">Điện thoại</span></small><span>0375 300 990</span></div>
+        </a>
+        <div class="contact-item">
+          <span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+          <div><small><span lang="en">Location</span><span lang="vi">Nơi ở</span></small><span><span lang="en">Ho Chi Minh City</span><span lang="vi">TP. Hồ Chí Minh</span></span></div>
+        </div>
+        <a class="contact-item" href="https://github.com/KT-Hg" target="_blank" rel="noopener">
+          <span class="ic"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></span>
+          <div><small>GitHub</small><span>github.com/KT-Hg</span></div>
+        </a>
+      </div>
+      <div class="contact-cta reveal">
+        <a class="btn btn-primary" href="mailto:kthoangst1@gmail.com">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <span lang="en">Send an email</span><span lang="vi">Gửi email</span>
+        </a>
+        <a class="btn btn-ghost" href="CV%20-%20Khuu%20Tan%20Hoang%20-%20QA-QC%20Engineer.pdf" download="CV - Khuu Tan Hoang - QA-QC Engineer.pdf">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg>
+          <span lang="en">Download CV (PDF)</span><span lang="vi">Tải CV (PDF)</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <span>© <span id="year">2026</span> <span lang="en">Khuu Tan Hoang</span><span lang="vi">Khưu Tấn Hoàng</span></span>
+    <a href="#top"><span lang="en">Back to top ↑</span><span lang="vi">Lên đầu trang ↑</span></a>
+  </div>
+</footer>
+
+<script>
+  (() => {
+    const d = document.documentElement;
+    const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+
+    $('#lang-btn').addEventListener('click', () => { d.lang = d.lang === 'vi' ? 'en' : 'vi'; save('lang', d.lang); syncTitle(); });
+    $('#theme-btn').addEventListener('click', () => { d.dataset.theme = d.dataset.theme === 'dark' ? 'light' : 'dark'; save('theme', d.dataset.theme); });
+
+    // Mobile menu
+    const header = $('.site-header'), menuBtn = $('#menu-btn');
+    const setMenu = open => { header.classList.toggle('nav-open', open); menuBtn.setAttribute('aria-expanded', open); };
+    menuBtn.addEventListener('click', () => setMenu(!header.classList.contains('nav-open')));
+    $$('.nav-links a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+    // "Read more" toggles on small screens
+    $$('.more-btn').forEach(b => b.addEventListener('click', () => {
+      b.setAttribute('aria-expanded', b.closest('.collapsible').classList.toggle('expanded'));
+    }));
+
+    $('#year').textContent = new Date().getFullYear();
+
+    // Fade-in on scroll + highlight the current section in the menu
+    if (!('IntersectionObserver' in window)) { $$('.reveal').forEach(el => el.classList.add('in')); return; }
+    const reveal = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); reveal.unobserve(e.target); }
+    }), { threshold: 0.12 });
+    $$('.reveal').forEach(el => reveal.observe(el));
+
+    const links = [...$$('.nav-links a')];
+    const spy = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.hash === '#' + e.target.id));
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    $$('main section[id]').forEach(s => spy.observe(s));
+  })();
+</script>
+</body>
+</html>
