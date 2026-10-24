@@ -219,16 +219,38 @@
     .hero .container { display: grid; grid-template-columns: minmax(0, 1fr) clamp(260px, 30%, 360px); gap: 48px; align-items: center; }
     .hero-deco { display: block; }
   }
+  /* One illustration per visit (picked in the script below); without JS the first one shows */
+  .hero-deco .deco-v { display: none; }
+  .hero-deco .deco-v.on, html:not(.js) .hero-deco .deco-v:first-child { display: inline; }
   .hero-deco .d-soft { fill: var(--primary-soft); }
   .hero-deco .d-ring { fill: none; stroke: var(--border); stroke-width: 1.5; stroke-dasharray: 4 8; }
+  .hero-deco .d-orbit { fill: none; stroke: var(--border); stroke-width: 1.5; }
   .hero-deco .d-card { fill: var(--surface); stroke: var(--border); filter: drop-shadow(0 14px 28px rgba(15, 23, 42, .10)); }
+  .hero-deco .d-outline { fill: var(--surface); stroke: var(--border); stroke-width: 1.5; }
+  .hero-deco .d-line { stroke: var(--border); stroke-width: 1.5; }
   .hero-deco .d-bar { fill: var(--border); }
   .hero-deco .d-box { fill: var(--primary-soft); }
+  .hero-deco .d-code { fill: var(--primary); opacity: .45; }
   .hero-deco .d-check { fill: none; stroke: var(--primary); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
   .hero-deco .d-accent { fill: var(--accent-fill); }
+  .hero-deco .d-accent-soft { fill: var(--accent-soft); }
   .hero-deco .d-primary { fill: var(--primary); }
   .hero-deco .d-ink { fill: none; stroke: var(--primary-ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .hero-deco .d-ink-lg { fill: none; stroke: var(--primary-ink); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
   .hero-deco .d-ink-bar { fill: var(--primary-ink); opacity: .55; }
+  .hero-deco .d-white { fill: #fff; }
+  .hero-deco .d-wcheck { fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .hero-deco .d-rec-text { fill: #fff; font: 700 13px "Be Vietnam Pro", sans-serif; letter-spacing: .08em; }
+  .hero-deco .d-ripple { fill: none; stroke: var(--accent-fill); stroke-width: 2; }
+  .hero-deco .d-cursor { fill: var(--text); stroke: var(--surface); stroke-width: 2; stroke-linejoin: round; }
+  .hero-deco .d-dash { fill: none; stroke: var(--primary); stroke-width: 2; stroke-dasharray: 2 8; stroke-linecap: round; opacity: .8; }
+  .hero-deco .d-lens { fill: var(--surface); fill-opacity: .6; stroke: var(--primary); stroke-width: 9; }
+  .hero-deco .d-handle { stroke: var(--primary); stroke-width: 14; stroke-linecap: round; }
+  .hero-deco .d-legs { fill: none; stroke: var(--accent-fill); stroke-width: 2.5; stroke-linecap: round; }
+  .hero-deco .d-split { stroke: var(--surface); stroke-width: 2; }
+  .hero-deco .d-mtn { fill: var(--primary); opacity: .35; }
+  .hero-deco .d-rec-ring { fill: none; stroke: var(--accent-fill); stroke-width: 3; }
+  .hero-deco .d-doc { fill: var(--primary-soft); stroke: var(--primary); stroke-width: 2; }
   .status { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .85rem; font-weight: 600; }
   .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-fill); }
   .hero h1 { margin-top: 16px; font-size: clamp(2.4rem, 6.5vw, 4.25rem); font-weight: 700; letter-spacing: -.025em; }
@@ -380,30 +402,157 @@
         </ul>
       </div>
       <svg class="hero-deco reveal" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
-        <circle class="d-soft" cx="210" cy="205" r="170"/>
-        <circle class="d-ring" cx="210" cy="205" r="192"/>
-        <rect class="d-accent" x="300" y="38" width="54" height="54" rx="14" transform="rotate(12 327 65)"/>
-        <circle class="d-primary" cx="62" cy="328" r="16"/>
-        <g class="d-accent">
-          <circle cx="40" cy="70" r="3"/><circle cx="56" cy="70" r="3"/><circle cx="72" cy="70" r="3"/>
-          <circle cx="40" cy="86" r="3"/><circle cx="56" cy="86" r="3"/><circle cx="72" cy="86" r="3"/>
+        <g class="deco-v" data-look="checklist">
+          <circle class="d-soft" cx="210" cy="205" r="170"/>
+          <circle class="d-ring" cx="210" cy="205" r="192"/>
+          <rect class="d-accent" x="300" y="38" width="54" height="54" rx="14" transform="rotate(12 327 65)"/>
+          <circle class="d-primary" cx="62" cy="328" r="16"/>
+          <g class="d-accent"><circle cx="40" cy="70" r="3"/><circle cx="56" cy="70" r="3"/><circle cx="72" cy="70" r="3"/><circle cx="40" cy="86" r="3"/><circle cx="56" cy="86" r="3"/><circle cx="72" cy="86" r="3"/></g>
+          <rect class="d-card" x="70" y="96" width="270" height="222" rx="20"/>
+          <circle class="d-bar" cx="98" cy="124" r="5"/><circle class="d-bar" cx="114" cy="124" r="5"/><circle class="d-bar" cx="130" cy="124" r="5"/>
+          <rect class="d-bar" x="150" y="119" width="92" height="10" rx="5"/>
+          <rect class="d-box" x="96" y="150" width="24" height="24" rx="7"/><path class="d-check" d="M102 162l4.5 4.5 8-8.5"/>
+          <rect class="d-bar" x="134" y="157" width="150" height="10" rx="5"/>
+          <rect class="d-box" x="96" y="190" width="24" height="24" rx="7"/><path class="d-check" d="M102 202l4.5 4.5 8-8.5"/>
+          <rect class="d-bar" x="134" y="197" width="118" height="10" rx="5"/>
+          <rect class="d-box" x="96" y="230" width="24" height="24" rx="7"/><circle class="d-accent" cx="108" cy="242" r="5"/>
+          <rect class="d-bar" x="134" y="237" width="168" height="10" rx="5"/>
+          <rect class="d-box" x="96" y="270" width="24" height="24" rx="7"/><path class="d-check" d="M102 282l4.5 4.5 8-8.5"/>
+          <rect class="d-bar" x="134" y="277" width="96" height="10" rx="5"/>
+          <rect class="d-primary" x="252" y="296" width="112" height="40" rx="20"/>
+          <path class="d-ink" d="M272 316l5 5 9-10"/>
+          <rect class="d-ink-bar" x="296" y="311" width="50" height="10" rx="5"/>
         </g>
-        <!-- checklist card -->
-        <rect class="d-card" x="70" y="96" width="270" height="222" rx="20"/>
-        <circle class="d-bar" cx="98" cy="124" r="5"/><circle class="d-bar" cx="114" cy="124" r="5"/><circle class="d-bar" cx="130" cy="124" r="5"/>
-        <rect class="d-bar" x="150" y="119" width="92" height="10" rx="5"/>
-        <rect class="d-box" x="96" y="150" width="24" height="24" rx="7"/><path class="d-check" d="M102 162l4.5 4.5 8-8.5"/>
-        <rect class="d-bar" x="134" y="157" width="150" height="10" rx="5"/>
-        <rect class="d-box" x="96" y="190" width="24" height="24" rx="7"/><path class="d-check" d="M102 202l4.5 4.5 8-8.5"/>
-        <rect class="d-bar" x="134" y="197" width="118" height="10" rx="5"/>
-        <rect class="d-box" x="96" y="230" width="24" height="24" rx="7"/><circle class="d-accent" cx="108" cy="242" r="5"/>
-        <rect class="d-bar" x="134" y="237" width="168" height="10" rx="5"/>
-        <rect class="d-box" x="96" y="270" width="24" height="24" rx="7"/><path class="d-check" d="M102 282l4.5 4.5 8-8.5"/>
-        <rect class="d-bar" x="134" y="277" width="96" height="10" rx="5"/>
-        <!-- floating "passed" pill -->
-        <rect class="d-primary" x="252" y="296" width="112" height="40" rx="20"/>
-        <path class="d-ink" d="M272 316l5 5 9-10"/>
-        <rect class="d-ink-bar" x="296" y="311" width="50" height="10" rx="5"/>
+        <g class="deco-v" data-look="record-replay">
+          <circle class="d-soft" cx="205" cy="205" r="168"/>
+          <circle class="d-ring" cx="205" cy="205" r="190"/>
+          <g class="d-accent"><circle cx="36" cy="318" r="3"/><circle cx="52" cy="318" r="3"/><circle cx="68" cy="318" r="3"/><circle cx="36" cy="334" r="3"/><circle cx="52" cy="334" r="3"/><circle cx="68" cy="334" r="3"/></g>
+          <!-- browser window -->
+          <rect class="d-card" x="58" y="92" width="290" height="206" rx="16"/>
+          <line class="d-line" x1="58" y1="126" x2="348" y2="126"/>
+          <circle class="d-bar" cx="80" cy="109" r="5"/><circle class="d-bar" cx="96" cy="109" r="5"/><circle class="d-bar" cx="112" cy="109" r="5"/>
+          <rect class="d-box" x="132" y="102" width="150" height="14" rx="7"/>
+          <rect class="d-bar" x="82" y="148" width="120" height="12" rx="6"/>
+          <rect class="d-bar" x="82" y="170" width="190" height="8" rx="4" opacity=".6"/>
+          <rect class="d-outline" x="82" y="192" width="176" height="32" rx="8"/>
+          <rect class="d-bar" x="96" y="204" width="72" height="8" rx="4"/>
+          <rect class="d-primary" x="82" y="238" width="96" height="34" rx="9"/>
+          <rect class="d-ink-bar" x="102" y="251" width="56" height="8" rx="4"/>
+          <!-- click -->
+          <circle class="d-ripple" cx="164" cy="258" r="14"/>
+          <circle class="d-ripple" cx="164" cy="258" r="25" opacity=".45"/>
+          <path class="d-cursor" d="M164 258v27l7-6 5 11 5-2-5-11h9z"/>
+          <!-- REC pill -->
+          <rect class="d-accent" x="282" y="64" width="86" height="34" rx="17"/>
+          <circle class="d-white" cx="302" cy="81" r="6"/>
+          <text class="d-rec-text" x="314" y="86">REC</text>
+          <!-- replay steps -->
+          <path class="d-dash" d="M120 334H300"/>
+          <circle class="d-primary" cx="120" cy="334" r="15"/><path class="d-ink" d="M113 334l5 5 9-10"/>
+          <circle class="d-primary" cx="210" cy="334" r="15"/><path class="d-ink" d="M203 334l5 5 9-10"/>
+          <circle class="d-accent" cx="300" cy="334" r="15"/><path class="d-white" d="M295 326l12 8-12 8z"/>
+        </g>
+        <g class="deco-v" data-look="bug-hunt">
+          <circle class="d-soft" cx="200" cy="200" r="168"/>
+          <circle class="d-ring" cx="200" cy="200" r="190"/>
+          <rect class="d-accent" x="302" y="44" width="48" height="48" rx="13" transform="rotate(-10 326 68)"/>
+          <g class="d-accent"><circle cx="40" cy="322" r="3"/><circle cx="56" cy="322" r="3"/><circle cx="72" cy="322" r="3"/><circle cx="40" cy="338" r="3"/><circle cx="56" cy="338" r="3"/><circle cx="72" cy="338" r="3"/></g>
+          <!-- code card -->
+          <rect class="d-card" x="60" y="80" width="250" height="230" rx="18"/>
+          <circle class="d-bar" cx="82" cy="102" r="4.5"/><circle class="d-bar" cx="96" cy="102" r="4.5"/><circle class="d-bar" cx="110" cy="102" r="4.5"/>
+          <rect class="d-accent-soft" x="61" y="183" width="248" height="22"/>
+          <g class="d-bar" opacity=".7">
+            <rect x="78" y="124" width="10" height="8" rx="4"/><rect x="78" y="146" width="10" height="8" rx="4"/><rect x="78" y="168" width="10" height="8" rx="4"/>
+            <rect x="78" y="190" width="10" height="8" rx="4"/><rect x="78" y="212" width="10" height="8" rx="4"/><rect x="78" y="234" width="10" height="8" rx="4"/>
+            <rect x="78" y="256" width="10" height="8" rx="4"/><rect x="78" y="278" width="10" height="8" rx="4"/>
+          </g>
+          <rect class="d-code" x="100" y="124" width="90" height="8" rx="4"/>
+          <rect class="d-bar" x="116" y="146" width="120" height="8" rx="4"/>
+          <rect class="d-bar" x="116" y="168" width="70" height="8" rx="4"/><rect class="d-code" x="194" y="168" width="50" height="8" rx="4"/>
+          <rect class="d-accent" x="132" y="190" width="110" height="8" rx="4"/>
+          <rect class="d-bar" x="116" y="212" width="140" height="8" rx="4"/>
+          <rect class="d-code" x="100" y="234" width="60" height="8" rx="4"/>
+          <rect class="d-bar" x="116" y="256" width="100" height="8" rx="4"/>
+          <rect class="d-bar" x="100" y="278" width="40" height="8" rx="4"/>
+          <!-- magnifier -->
+          <line class="d-handle" x1="272" y1="228" x2="320" y2="276"/>
+          <circle class="d-lens" cx="238" cy="194" r="46"/>
+          <!-- bug -->
+          <g transform="translate(238 196)">
+            <path class="d-legs" d="M-13-6l-10-6M-15 3h-12M-13 11l-10 6M13-6l10-6M15 3h12M13 11l10 6M-4-19l-6-8M4-19l6-8"/>
+            <ellipse class="d-accent" cx="0" cy="4" rx="15" ry="18"/>
+            <circle class="d-accent" cx="0" cy="-14" r="8"/>
+            <line class="d-split" x1="0" y1="-8" x2="0" y2="21"/>
+          </g>
+        </g>
+        <g class="deco-v" data-look="web-mobile">
+          <circle class="d-soft" cx="200" cy="205" r="168"/>
+          <circle class="d-ring" cx="200" cy="205" r="190"/>
+          <g class="d-accent"><circle cx="44" cy="318" r="3"/><circle cx="60" cy="318" r="3"/><circle cx="76" cy="318" r="3"/><circle cx="44" cy="334" r="3"/><circle cx="60" cy="334" r="3"/><circle cx="76" cy="334" r="3"/></g>
+          <!-- browser -->
+          <rect class="d-card" x="40" y="100" width="260" height="180" rx="14"/>
+          <line class="d-line" x1="40" y1="128" x2="300" y2="128"/>
+          <circle class="d-bar" cx="58" cy="114" r="4.5"/><circle class="d-bar" cx="72" cy="114" r="4.5"/><circle class="d-bar" cx="86" cy="114" r="4.5"/>
+          <rect class="d-box" x="104" y="107" width="120" height="13" rx="6.5"/>
+          <rect class="d-box" x="60" y="146" width="96" height="72" rx="10"/>
+          <path class="d-mtn" d="M70 208l22-26 16 18 10-10 28 18z"/>
+          <rect class="d-bar" x="172" y="150" width="104" height="10" rx="5"/>
+          <rect class="d-bar" x="172" y="170" width="84" height="8" rx="4" opacity=".6"/>
+          <rect class="d-bar" x="172" y="186" width="96" height="8" rx="4" opacity=".6"/>
+          <rect class="d-primary" x="172" y="202" width="64" height="16" rx="8"/>
+          <rect class="d-bar" x="60" y="236" width="196" height="8" rx="4" opacity=".6"/>
+          <rect class="d-bar" x="60" y="252" width="150" height="8" rx="4" opacity=".6"/>
+          <circle class="d-primary" cx="296" cy="102" r="18"/><path class="d-ink" d="M288 102l5 5 10-11"/>
+          <!-- phone -->
+          <rect class="d-card" x="262" y="150" width="104" height="196" rx="18"/>
+          <rect class="d-bar" x="296" y="160" width="36" height="6" rx="3"/>
+          <rect class="d-box" x="274" y="176" width="80" height="54" rx="8"/>
+          <rect class="d-bar" x="274" y="242" width="70" height="8" rx="4"/>
+          <rect class="d-bar" x="274" y="258" width="54" height="8" rx="4" opacity=".6"/>
+          <rect class="d-bar" x="274" y="274" width="62" height="8" rx="4" opacity=".6"/>
+          <rect class="d-primary" x="274" y="304" width="80" height="26" rx="8"/>
+          <rect class="d-ink-bar" x="294" y="313" width="40" height="8" rx="4"/>
+          <circle class="d-accent" cx="364" cy="152" r="16"/><path class="d-wcheck" d="M357 152l5 5 9-10"/>
+        </g>
+        <g class="deco-v" data-look="test-flow">
+          <circle class="d-soft" cx="200" cy="205" r="165"/>
+          <circle class="d-ring" cx="200" cy="205" r="188"/>
+          <rect class="d-accent" x="306" y="40" width="46" height="46" rx="12" transform="rotate(12 329 63)"/>
+          <g class="d-accent"><circle cx="36" cy="328" r="3"/><circle cx="52" cy="328" r="3"/><circle cx="68" cy="328" r="3"/><circle cx="36" cy="344" r="3"/><circle cx="52" cy="344" r="3"/><circle cx="68" cy="344" r="3"/></g>
+          <path class="d-dash" d="M110 110C180 110 230 150 290 150C300 210 170 200 120 260C150 310 230 300 285 305"/>
+          <!-- 1 record -->
+          <rect class="d-card" x="78" y="78" width="64" height="64" rx="18"/>
+          <circle class="d-rec-ring" cx="110" cy="110" r="14"/><circle class="d-accent" cx="110" cy="110" r="7"/>
+          <!-- 2 replay -->
+          <rect class="d-card" x="258" y="118" width="64" height="64" rx="18"/>
+          <path class="d-primary" d="M283 137l20 13-20 13z"/>
+          <!-- 3 check -->
+          <rect class="d-card" x="88" y="228" width="64" height="64" rx="18"/>
+          <rect class="d-box" x="106" y="246" width="28" height="28" rx="8"/><path class="d-check" d="M113 260l5 5 10-10"/>
+          <!-- 4 report -->
+          <rect class="d-card" x="253" y="273" width="64" height="64" rx="18"/>
+          <rect class="d-doc" x="273" y="289" width="24" height="32" rx="4"/>
+          <rect class="d-primary" x="278" y="297" width="14" height="3" rx="1.5"/><rect class="d-primary" x="278" y="303" width="14" height="3" rx="1.5"/><rect class="d-accent" x="278" y="309" width="9" height="3" rx="1.5"/>
+        </g>
+        <g class="deco-v" data-look="orbit">
+          <circle class="d-soft" cx="200" cy="200" r="150"/>
+          <circle class="d-ring" cx="200" cy="200" r="186"/>
+          <circle class="d-orbit" cx="200" cy="200" r="110"/>
+          <circle class="d-orbit" cx="200" cy="200" r="62"/>
+          <rect class="d-primary" x="160" y="160" width="80" height="80" rx="24"/>
+          <path class="d-ink-lg" d="M181 201l13 13 26-28"/>
+          <circle class="d-accent" cx="310" cy="200" r="11"/>
+          <circle class="d-primary" cx="200" cy="90" r="7"/>
+          <circle class="d-bar" cx="122" cy="278" r="9"/>
+          <circle class="d-accent" cx="244" cy="157" r="5"/>
+          <circle class="d-primary" cx="156" cy="243" r="5"/>
+          <rect class="d-card" x="296" y="70" width="74" height="32" rx="16"/>
+          <circle class="d-box" cx="314" cy="86" r="10"/><path class="d-check" d="M309 86l3.5 3.5 6.5-7"/><rect class="d-bar" x="330" y="82" width="30" height="8" rx="4"/>
+          <rect class="d-card" x="28" y="178" width="74" height="32" rx="16"/>
+          <circle class="d-accent" cx="46" cy="194" r="5"/><rect class="d-bar" x="58" y="190" width="32" height="8" rx="4"/>
+          <rect class="d-card" x="244" y="310" width="84" height="32" rx="16"/>
+          <circle class="d-box" cx="262" cy="326" r="10"/><path class="d-check" d="M257 326l3.5 3.5 6.5-7"/><rect class="d-bar" x="278" y="322" width="38" height="8" rx="4"/>
+        </g>
       </svg>
     </div>
   </section>
@@ -710,6 +859,13 @@
     $$('.more-btn').forEach(b => b.addEventListener('click', () => {
       b.setAttribute('aria-expanded', b.closest('.collapsible').classList.toggle('expanded'));
     }));
+
+    // Hero illustration: random each visit, never the same one twice in a row
+    const looks = $$('.hero-deco .deco-v');
+    let prev = null; try { prev = localStorage.getItem('deco'); } catch (e) {}
+    let pick = Math.floor(Math.random() * (looks.length - (prev === null ? 0 : 1)));
+    if (prev !== null && pick >= +prev) pick++;
+    looks[pick].classList.add('on'); save('deco', pick);
 
     $('#year').textContent = new Date().getFullYear();
 
