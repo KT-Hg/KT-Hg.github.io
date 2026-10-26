@@ -350,6 +350,17 @@
   /* ---------- Fade-in on scroll ---------- */
   .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
   .js .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- Language / theme switch (View Transitions, started by animate() in the script) ---------- */
+  ::view-transition { pointer-events: none; }   /* a click during the animation still reaches the page */
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .35s; }
+  html[data-vt="theme"]::view-transition-old(root) { animation: none; mix-blend-mode: normal; }
+  html[data-vt="theme"]::view-transition-new(root) { animation: vt-reveal .55s ease-in-out; mix-blend-mode: normal; }
+  @keyframes vt-reveal {
+    from { clip-path: circle(0 at var(--vt-x) var(--vt-y)); }
+    to { clip-path: circle(var(--vt-r) at var(--vt-x) var(--vt-y)); }
+  }
+  html[data-vt] body { transition: none; }   /* the snapshot already has the new colours */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .js .reveal { opacity: 1; transform: none; transition: none; }
@@ -892,8 +903,23 @@
     const $ = s => document.querySelector(s);
     const $$ = s => document.querySelectorAll(s);
 
-    $('#lang-btn').addEventListener('click', () => { d.lang = d.lang === 'vi' ? 'en' : 'vi'; save('lang', d.lang); syncTitle(); });
-    $('#theme-btn').addEventListener('click', () => { d.dataset.theme = d.dataset.theme === 'dark' ? 'light' : 'dark'; save('theme', d.dataset.theme); });
+    // Switch with an animation where the View Transitions API exists: a crossfade for the language,
+    // a circle growing from the button for the theme. Otherwise (or with reduced motion) switch at once.
+    const animate = (type, update, from) => {
+      if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) return update();
+      if (from) {
+        const r = from.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+        d.style.setProperty('--vt-x', x + 'px');
+        d.style.setProperty('--vt-y', y + 'px');
+        d.style.setProperty('--vt-r', Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 'px');
+      }
+      d.dataset.vt = type;
+      const t = document.startViewTransition(update);
+      t.ready.catch(() => {});   // animation skipped (e.g. clicked again mid-way): the switch still happens
+      t.finished.finally(() => delete d.dataset.vt);
+    };
+    $('#lang-btn').addEventListener('click', () => animate('lang', () => { d.lang = d.lang === 'vi' ? 'en' : 'vi'; save('lang', d.lang); syncTitle(); }));
+    $('#theme-btn').addEventListener('click', e => animate('theme', () => { d.dataset.theme = d.dataset.theme === 'dark' ? 'light' : 'dark'; save('theme', d.dataset.theme); }, e.currentTarget));
 
     // Mobile menu
     const header = $('.site-header'), menuBtn = $('#menu-btn');
