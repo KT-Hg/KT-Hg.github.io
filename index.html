@@ -353,13 +353,10 @@
 
   /* ---------- Language / theme switch (View Transitions, started by animate() in the script) ---------- */
   ::view-transition { pointer-events: none; }   /* a click during the animation still reaches the page */
-  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .35s; }
-  html[data-vt="theme"]::view-transition-old(root) { animation: none; mix-blend-mode: normal; }
-  html[data-vt="theme"]::view-transition-new(root) { animation: vt-reveal .55s ease-in-out; mix-blend-mode: normal; }
-  @keyframes vt-reveal {
-    from { clip-path: circle(0 at var(--vt-x) var(--vt-y)); }
-    to { clip-path: circle(var(--vt-r) at var(--vt-x) var(--vt-y)); }
-  }
+  html[data-vt="lang"]::view-transition-old(root), html[data-vt="lang"]::view-transition-new(root) { animation-duration: .5s; }
+  html[data-vt="theme"]::view-transition-old(root),
+  html[data-vt="theme"]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }   /* the circle is animated by the script */
+  html[data-vt="theme"] #theme-btn { view-transition-name: theme-btn; }   /* lets the script find the button in the snapshot */
   html[data-vt] body { transition: none; }   /* the snapshot already has the new colours */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -904,22 +901,28 @@
     const $$ = s => document.querySelectorAll(s);
 
     // Switch with an animation where the View Transitions API exists: a crossfade for the language,
-    // a circle growing from the button for the theme. Otherwise (or with reduced motion) switch at once.
-    const animate = (type, update, from) => {
+    // a circle growing from the theme button for the theme. Otherwise (or with reduced motion) switch at once.
+    const animate = (type, update) => {
       if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) return update();
-      if (from) {
-        const r = from.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
-        d.style.setProperty('--vt-x', x + 'px');
-        d.style.setProperty('--vt-y', y + 'px');
-        d.style.setProperty('--vt-r', Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 'px');
-      }
       d.dataset.vt = type;
       const t = document.startViewTransition(update);
-      t.ready.catch(() => {});   // animation skipped (e.g. clicked again mid-way): the switch still happens
+      t.ready.then(() => {
+        if (type !== 'theme') return;
+        // Centre the circle on the theme button where the snapshot has it (the button gets its own
+        // view-transition-name): on phones the snapshot also covers the URL bar, so its viewport position can be off.
+        const b = $('#theme-btn').getBoundingClientRect(), css = p => getComputedStyle(d, p);
+        const g = css('::view-transition-group(theme-btn)').transform, box = css('::view-transition');
+        const m = /matrix/.test(g) ? new DOMMatrix(g) : new DOMMatrix([1, 0, 0, 1, b.left, b.top]);
+        const x = m.e + b.width / 2, y = m.f + b.height / 2;
+        const w = parseFloat(box.width) || innerWidth, h = parseFloat(box.height) || innerHeight;
+        const r = Math.hypot(Math.max(x, w - x), Math.max(y, h - y));
+        d.animate({clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`]},
+          {duration: 550, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)'});
+      }).catch(() => {});   // animation skipped (e.g. clicked again mid-way): the switch still happens
       t.finished.finally(() => delete d.dataset.vt);
     };
     $('#lang-btn').addEventListener('click', () => animate('lang', () => { d.lang = d.lang === 'vi' ? 'en' : 'vi'; save('lang', d.lang); syncTitle(); }));
-    $('#theme-btn').addEventListener('click', e => animate('theme', () => { d.dataset.theme = d.dataset.theme === 'dark' ? 'light' : 'dark'; save('theme', d.dataset.theme); }, e.currentTarget));
+    $('#theme-btn').addEventListener('click', () => animate('theme', () => { d.dataset.theme = d.dataset.theme === 'dark' ? 'light' : 'dark'; save('theme', d.dataset.theme); }));
 
     // Mobile menu
     const header = $('.site-header'), menuBtn = $('#menu-btn');
