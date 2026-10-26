@@ -292,9 +292,10 @@
   .projects { display: grid; grid-template-columns: 2.5fr 1fr; gap: 20px; }
   @media (max-width: 900px) { .projects { grid-template-columns: 1fr; } }
   .project { display: flex; flex-direction: column; gap: calc(10px + var(--sy) / 4); font-size: .92rem; line-height: 1.55; }
-  .project-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
-  .project-top .badge { margin-left: auto; }
-  .badge { padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .76rem; font-weight: 600; }
+  .project-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
+  .project-role { margin-top: 6px; }
+  .badge { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .76rem; font-weight: 600; }
+  .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-fill); }
   .project h3 { font-size: 1.2rem; }
   .project .checks { gap: calc(8px + var(--sy) / 5); }
   .project-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto; padding-top: 6px; }
@@ -667,12 +668,14 @@
       <div class="collapsible">
         <div class="projects">
           <article class="card project reveal">
-            <div class="project-top">
-              <span class="date">12/2025 – <span lang="en">Present</span><span lang="vi">Nay</span></span>
-              <span class="muted"><span lang="en">Role: QA / Developer · Solo project</span><span lang="vi">Vai trò: QA / Developer · Thực hiện độc lập</span></span>
-              <span class="badge"><span lang="en">Published on Chrome Web Store</span><span lang="vi">Đã phát hành trên Chrome Web Store</span></span>
+            <span class="badge"><span lang="en">Published on Chrome Web Store</span><span lang="vi">Đã phát hành trên Chrome Web Store</span></span>
+            <div>
+              <div class="project-head">
+                <h3>Pocket QA — Web Test Automation Extension</h3>
+                <span class="date">12/2025 – <span lang="en">Present</span><span lang="vi">Nay</span></span>
+              </div>
+              <p class="project-role muted"><span lang="en">Role: QA / Developer · Solo project</span><span lang="vi">Vai trò: QA / Developer · Thực hiện độc lập</span></p>
             </div>
-            <h3>Pocket QA — Web Test Automation Extension</h3>
             <p>
               <span lang="en">Self-built Chrome extension that records a tester's actions and replays them as regression tests, with a pass/fail result and a ready-to-paste bug report.</span>
               <span lang="vi">Tiện ích Chrome tự xây dựng, ghi lại thao tác của tester rồi phát lại thành các bài kiểm thử hồi quy, kèm kết quả pass/fail và bug report sẵn sàng để dán.</span>
@@ -709,12 +712,14 @@
           </article>
   
           <article class="card project more reveal">
-            <div class="project-top">
-              <span class="date">12/2024</span>
-              <span class="muted"><span lang="en">Role: QA · Solo project</span><span lang="vi">Vai trò: QA · Thực hiện độc lập</span></span>
-              <span class="badge"><span lang="en">Training project</span><span lang="vi">Dự án đào tạo</span></span>
+            <span class="badge"><span lang="en">Training project</span><span lang="vi">Dự án đào tạo</span></span>
+            <div>
+              <div class="project-head">
+                <h3>Tool Shop</h3>
+                <span class="date">12/2024</span>
+              </div>
+              <p class="project-role muted"><span lang="en">Role: QA · Solo project</span><span lang="vi">Vai trò: QA · Thực hiện độc lập</span></p>
             </div>
-            <h3>Tool Shop</h3>
             <p>
               <span lang="en">Tested an online e-commerce platform: Functional, UI, Performance and API testing; automated selected regression cases.</span>
               <span lang="vi">Kiểm thử một nền tảng thương mại điện tử trực tuyến: kiểm thử chức năng, UI, hiệu năng và API; tự động hoá một số test case hồi quy chọn lọc.</span>
