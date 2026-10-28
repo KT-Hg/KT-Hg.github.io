@@ -93,8 +93,10 @@
     color: var(--text);
     font: 400 1rem/1.7 "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
+    text-wrap: pretty;   /* no one-word last line; browsers without it wrap as before */
     transition: background-color .2s, color .2s;
   }
+  .nw { white-space: nowrap; }   /* keeps a hyphenated name like "VNU-HCM" from breaking at its hyphen */
   h1, h2, h3 { margin: 0; line-height: 1.2; letter-spacing: -.01em; }
   p { margin: 0; }
   a { color: var(--primary); }
@@ -120,8 +122,12 @@
   .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 100%; }
   .brand { font-weight: 700; color: var(--text); text-decoration: none; white-space: nowrap; }
   .nav-links { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; }
-  .nav-links a { display: block; padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 500; }
+  .nav-links a { display: block; padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 500; text-align: center; }
   .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--surface-2); }
+  @media (min-width: 1024px) {   /* every item as wide as the longest one; side padding shrinks to 6px at 1024px so the row still fits */
+    .nav-links { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
+    .nav-links a { padding-inline: clamp(6px, .6vw, 12px); }
+  }
   .nav-tools { display: flex; align-items: center; gap: 8px; }
   .icon-btn {
     height: 38px; min-width: 38px; padding: 0 10px; display: inline-grid; place-items: center;
@@ -142,7 +148,7 @@
       padding: 8px 16px 16px; background: var(--bg); border-bottom: 1px solid var(--border); box-shadow: var(--shadow);
     }
     .nav-open .nav-links { display: flex; }
-    .nav-links a { padding: 12px; }
+    .nav-links a { padding: 12px; text-align: left; }
   }
 
   /* ---------- Sections ---------- */
@@ -190,7 +196,7 @@
   }
 
   .btn {
-    display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border: 1px solid transparent; border-radius: 10px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; border: 1px solid transparent; border-radius: 10px;
     font-weight: 600; text-decoration: none; transition: transform .15s, border-color .15s;
   }
   .btn:hover { transform: translateY(-1px); }
@@ -257,16 +263,24 @@
   .hero .role { margin-top: 10px; font-size: clamp(1.1rem, 2.2vw, 1.4rem); font-weight: 600; color: var(--primary); }
   .hero .lead { max-width: 58ch; margin-top: 16px; font-size: clamp(1.02rem, 1.6vw, 1.15rem); color: var(--muted); }
   .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
-  .stats { display: flex; flex-wrap: wrap; gap: 16px 20px; margin: 24px 0 0; padding: 0; list-style: none; }
+  .stats { display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); gap: 16px 20px; margin: 24px 0 0; padding: 0; list-style: none; }
   .stats strong { display: block; font-size: 1.35rem; font-weight: 700; line-height: 1.3; }
   .stats span { font-size: .82rem; color: var(--muted); }
 
   /* ---------- About ---------- */
-  .about-grid { display: grid; grid-template-columns: 1fr 320px; gap: 40px; align-items: start; }
+  .about-grid { display: grid; grid-template-columns: 1fr auto; gap: clamp(28px, 3vw, 40px); align-items: start; }
   .about-text p { max-width: 72ch; margin-bottom: .9em; }
   .facts { display: grid; gap: calc(12px + var(--sy) / 4); margin: 0; }
-  .facts dd { margin: 2px 0 0; font-weight: 500; }
-  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 32px; } }
+  /* Beside the text the facts card is as wide as its longest line: values never wrap, a <br> splits the long ones */
+  .facts dd { margin: 2px 0 0; font-weight: 500; white-space: nowrap; }
+  .facts .sep { display: none; }
+  @media (max-width: 900px) {   /* full width under the text: one line per value */
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .facts { gap: calc(8px + var(--sy) / 4); }
+    .facts dd { white-space: normal; }
+    .facts br { display: none; }
+    .facts .sep { display: inline; }
+  }
 
   /* ---------- Experience timeline ---------- */
   .timeline { --tl: 32px; position: relative; margin: 0; padding: 0 0 0 var(--tl); list-style: none; }
@@ -307,17 +321,23 @@
   .skill .hint { margin: 2px 0 12px; font-size: .84rem; color: var(--muted); }
 
   /* ---------- Education ---------- */
-  @media (min-width: 900px) {
-    .edu { display: grid; grid-template-columns: auto 1fr minmax(260px, 34%); gap: 24px; align-items: center; }
+  /* Wide screens: one row, icon | school, years, degree | coursework, each centred top to bottom.
+     The middle column is as wide as the school name, so it stays on one line. Narrower: stacked. */
+  @media (min-width: 1024px) {
+    .edu { display: grid; grid-template-columns: auto minmax(0, max-content) 1fr; gap: 24px; align-items: center; align-content: center; }
     .edu .edu-icon { margin: 0; }
-    .edu .edu-side { margin: 0; padding: 0 0 0 24px; border-top: 0; border-left: 1px solid var(--border); }
+    .edu-body { display: flex; flex-direction: column; gap: 10px; }
+    .edu-main .company { margin-top: 0; }
+    .edu .edu-side { align-self: stretch; display: flex; flex-direction: column; justify-content: center; gap: 8px; margin: 0; padding: 0 0 0 24px; border-top: 0; border-left: 1px solid var(--border); }
   }
   .edu-icon { width: 44px; height: 44px; margin-bottom: 14px; border-radius: 12px; display: grid; place-items: center; background: var(--primary-soft); color: var(--primary); }
   .edu-icon .i { width: 24px; height: 24px; }
   .edu h3 { font-size: 1.25rem; }
+  .edu-head { flex-direction: column; align-items: flex-start; }   /* the years sit under the school name */
 
   /* ---------- Contact ---------- */
   .contact-lead { max-width: 60ch; margin-top: 14px; font-size: 1.08rem; color: var(--muted); }
+  @media (min-width: 1024px) { .contact-lead { max-width: none; } }   /* PC: the sentence fits on one line */
   .contact-grid { display: grid; grid-template-columns: 1fr; gap: calc(16px + var(--sy) / 3); }
   @media (min-width: 700px) { .contact-grid { grid-template-columns: 1fr 1fr; } .contact-item:last-child:nth-child(odd) { grid-column: 1 / -1; } }
   .contact-item {
@@ -329,6 +349,8 @@
   .contact-item small { display: block; font-size: .74rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
   .contact-item span { font-weight: 600; overflow-wrap: anywhere; }
   .contact-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  /* One column on phones: tighter spacing keeps Contact on one screen */
+  @media (max-width: 699px) { .contact-grid { gap: 8px; } .contact-item { padding-block: 8px; } .contact-cta { margin-top: 20px; } }
 
   /* ---------- CV preview dialog ---------- */
   .cv-dialog {
@@ -404,7 +426,7 @@
         <h1><span lang="en">Khuu Tan Hoang</span><span lang="vi">Khưu Tấn Hoàng</span></h1>
         <p class="role">QC Engineer — Manual &amp; Automation</p>
         <p class="lead">
-          <span lang="en">I test B2C e-commerce products on web &amp; mobile, own payment-flow testing on my assigned flows, and built Pocket QA — a published Chrome test-automation extension.</span>
+          <span lang="en">I test B2C <span class="nw">e-commerce</span> products on web &amp; mobile, own <span class="nw">payment-flow</span> testing on my assigned flows, and built Pocket QA — a published Chrome <span class="nw">test-automation extension.</span></span>
           <span lang="vi">Tôi kiểm thử sản phẩm thương mại điện tử B2C trên web &amp; mobile, phụ trách kiểm thử luồng thanh toán được giao, và tự xây dựng Pocket QA — tiện ích Chrome tự động hoá kiểm thử đã phát hành.</span>
         </p>
         <div class="cta">
@@ -422,9 +444,10 @@
           </a>
         </div>
         <ul class="stats">
-          <li><strong>1.5+</strong><span lang="en">years in Japanese IT outsourcing</span><span lang="vi">năm trong IT outsourcing Nhật Bản</span></li>
-          <li><strong>2</strong><span lang="en">B2C e-commerce products tested</span><span lang="vi">sản phẩm TMĐT B2C đã kiểm thử</span></li>
-          <li><strong>Web · Android · iOS</strong><span lang="en">tested every sprint</span><span lang="vi">kiểm thử mỗi sprint</span></li>
+          <li><strong>1.5+</strong><span lang="en">years in Japanese IT&nbsp;outsourcing</span><span lang="vi">năm trong IT outsourcing Nhật Bản</span></li>
+          <li><strong>2</strong><span lang="en">B2C <span class="nw">e-commerce</span> products tested</span><span lang="vi">sản phẩm TMĐT B2C đã kiểm thử</span></li>
+          <li><strong>103</strong><span lang="en">defects reported · 98% valid</span><span lang="vi">lỗi đã báo cáo · 98% hợp lệ</span></li>
+          <li><strong>Web · Android&nbsp;·&nbsp;iOS</strong><span lang="en">tested every sprint</span><span lang="vi">kiểm thử mỗi sprint</span></li>
         </ul>
       </div>
       <svg class="hero-deco reveal" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
@@ -592,21 +615,21 @@
       </div>
       <div class="about-grid">
         <div class="about-text collapsible reveal">
-          <p lang="en">Hi, I'm Hoang — a QC Engineer with 1.5+ years in Japanese IT outsourcing. At Lampart, I test B2C e-commerce products on web and mobile, working in Agile teams of 15–30 people.</p>
-          <p class="more" lang="en">On the payment side, I own the testing of the authentication and payment steps for new payment methods on the flows assigned to me: GMO credit card with 3-D Secure, Amazon Pay, refunds, cancellations, 8%/10% tax rounding and promotions. I also verify what happens below the UI — testing APIs with Postman and writing SQL on MySQL and SQL Server to reconcile order totals between the API and the database.</p>
+          <p lang="en">Hi, I'm Hoang — a QC Engineer with 1.5+ years of <span class="nw">full-time</span> experience in Japanese IT outsourcing. At Lampart, I've tested two B2C <span class="nw">e-commerce</span> products on web and mobile, in Agile teams of 30 and 15 people.</p>
+          <p class="more" lang="en">On the payment side, I own the testing of the authentication and payment steps for new payment methods on the flows assigned to me: GMO credit card with <span class="nw">3-D</span> Secure, Amazon Pay, refunds, cancellations, 8%/10% tax rounding and promotions. I also verify what happens below the UI — testing APIs with Postman and writing SQL on MySQL and SQL Server to reconcile order totals between the API and the database. I read specs closely, too: so far I've raised 176 Q&amp;A items to clarify requirements and reported 103 defects, 98% of them valid.</p>
           <p class="more" lang="en">As a personal project, I built Pocket QA, a Chrome extension published on the Chrome Web Store that records a tester's actions and replays them as regression tests. I graduated in Information Technology from HCMUS in 10/2025, and I'm now looking for a QC role that combines manual testing with automation.</p>
 
-          <p lang="vi">Xin chào, tôi là Hoàng — QC Engineer với hơn 1,5 năm kinh nghiệm trong lĩnh vực IT outsourcing Nhật Bản. Tại Lampart, tôi kiểm thử các sản phẩm thương mại điện tử B2C trên web và mobile, làm việc trong các nhóm Agile quy mô 15–30 người.</p>
-          <p class="more" lang="vi">Ở mảng thanh toán, tôi phụ trách kiểm thử bước xác thực và thanh toán cho các phương thức thanh toán mới trên những luồng được giao: thẻ tín dụng GMO (3-D Secure), Amazon Pay, hoàn tiền, huỷ đơn, làm tròn thuế 8%/10% và khuyến mãi. Tôi cũng kiểm tra cả phần bên dưới giao diện — test API bằng Postman và viết SQL trên MySQL, SQL Server để đối soát tổng tiền đơn hàng giữa API và database.</p>
-          <p class="more" lang="vi">Là một dự án cá nhân, tôi đã xây dựng Pocket QA — tiện ích Chrome phát hành trên Chrome Web Store, ghi lại thao tác của tester và phát lại thành các bài kiểm thử hồi quy. Tôi tốt nghiệp ngành Công nghệ Thông tin tại HCMUS vào 10/2025 và đang tìm kiếm vị trí QC kết hợp kiểm thử thủ công với tự động hoá.</p>
+          <p lang="vi">Xin chào, tôi là Hoàng — QC Engineer với hơn 1,5 năm làm việc chính thức trong lĩnh vực IT outsourcing Nhật Bản. Tại Lampart, tôi đã kiểm thử hai sản phẩm thương mại điện tử B2C trên web và mobile, trong các nhóm Agile 30 và 15 người.</p>
+          <p class="more" lang="vi">Ở mảng thanh toán, tôi phụ trách kiểm thử bước xác thực và thanh toán cho các phương thức thanh toán mới trên những luồng được giao: thẻ tín dụng GMO (<span class="nw">3-D</span> Secure), Amazon Pay, hoàn tiền, huỷ đơn, làm tròn thuế 8%/10% và khuyến mãi. Tôi cũng kiểm tra cả phần bên dưới giao diện — test API bằng Postman và viết SQL trên MySQL, SQL Server để đối soát tổng tiền đơn hàng giữa API và database. Tôi đọc spec rất kỹ: đến nay đã gửi 176 Q&amp;A để làm rõ yêu cầu và báo cáo 103 lỗi, 98% hợp lệ.</p>
+          <p class="more" lang="vi">Ngoài công việc, tôi tự xây dựng Pocket QA — tiện ích Chrome phát hành trên Chrome Web Store, ghi lại thao tác của tester và phát lại thành các bài kiểm thử hồi quy. Tôi tốt nghiệp ngành Công nghệ Thông tin tại HCMUS vào 10/2025 và đang tìm kiếm vị trí QC kết hợp kiểm thử thủ công với tự động hoá.</p>
           <button class="more-btn" type="button" aria-expanded="false"><span class="l-more"><span lang="en">Read more</span><span lang="vi">Xem thêm</span></span><span class="l-less"><span lang="en">Show less</span><span lang="vi">Thu gọn</span></span></button>
         </div>
         <dl class="card facts reveal">
           <div><dt class="label"><span lang="en">Location</span><span lang="vi">Nơi ở</span></dt><dd><span lang="en">Ho Chi Minh City</span><span lang="vi">TP. Hồ Chí Minh</span></dd></div>
-          <div><dt class="label"><span lang="en">Currently</span><span lang="vi">Hiện tại</span></dt><dd>QC Engineer · Lampart Co., Ltd.</dd></div>
-          <div><dt class="label"><span lang="en">Education</span><span lang="vi">Học vấn</span></dt><dd><span lang="en">B.Sc. in IT — HCMUS (2025)</span><span lang="vi">Cử nhân CNTT — HCMUS (2025)</span></dd></div>
-          <div><dt class="label"><span lang="en">English</span><span lang="vi">Tiếng Anh</span></dt><dd><span lang="en">Intermediate (reading specifications)</span><span lang="vi">Trung cấp (đọc tài liệu đặc tả)</span></dd></div>
-          <div><dt class="label"><span lang="en">Looking for</span><span lang="vi">Đang tìm</span></dt><dd><span lang="en">Manual + Automation QC role</span><span lang="vi">Vị trí QC Manual + Automation</span></dd></div>
+          <div><dt class="label"><span lang="en">Currently</span><span lang="vi">Hiện tại</span></dt><dd>QC Engineer · Lampart&nbsp;Co.,&nbsp;Ltd.</dd></div>
+          <div><dt class="label"><span lang="en">Education</span><span lang="vi">Học vấn</span></dt><dd><span lang="en">B.Sc. in Information Technology</span><span lang="vi">Cử nhân Công nghệ Thông tin</span><span class="sep"> — </span><br>HCMUS&nbsp;(2025)</dd></div>
+          <div><dt class="label"><span lang="en">English</span><span lang="vi">Tiếng Anh</span></dt><dd><span lang="en">Intermediate <br>(reading specifications)</span><span lang="vi">Trung cấp <br>(đọc tài liệu đặc tả)</span></dd></div>
+          <div><dt class="label"><span lang="en">Focus</span><span lang="vi">Trọng tâm</span></dt><dd><span lang="en">Payment flows · API · SQL</span><span lang="vi">Luồng thanh toán · API · SQL</span></dd></div>
         </dl>
       </div>
     </div>
@@ -629,18 +652,18 @@
             <p class="company">Lampart Co., Ltd. <span class="muted">· <span lang="en">Ho Chi Minh City · Japanese IT outsourcing</span><span lang="vi">TP. Hồ Chí Minh · IT outsourcing Nhật Bản</span></span></p>
             <ul class="steps">
               <li><b>02/2025</b> · <span lang="en">Intern</span><span lang="vi">Thực tập sinh</span></li>
-              <li><b>04/2025</b> · <span lang="en">Full-time</span><span lang="vi">Nhân viên chính thức</span></li>
+              <li><b>04/2025</b> · <span lang="en"><span class="nw">Full-time</span></span><span lang="vi">Nhân viên chính thức</span></li>
             </ul>
           </div>
           <div class="tl-body collapsible">
             <ul class="checks cols">
               <li>
-                <span lang="en">Owned testing of the authentication and payment steps for new payment methods on assigned flows, including <strong>GMO credit card (3-D Secure)</strong> and <strong>Amazon Pay</strong>: refunds, cancellations, 8%/10% tax rounding, promotions.</span>
-                <span lang="vi">Phụ trách kiểm thử bước xác thực và thanh toán cho các phương thức thanh toán mới trên những luồng được giao, gồm <strong>thẻ tín dụng GMO (3-D Secure)</strong> và <strong>Amazon Pay</strong>: hoàn tiền, huỷ đơn, làm tròn thuế 8%/10%, khuyến mãi.</span>
+                <span lang="en">Owned testing of the authentication and payment steps for new payment methods on assigned flows, including <strong>GMO credit card (<span class="nw">3-D</span> Secure)</strong> and <strong>Amazon Pay</strong>: refunds, cancellations, 8%/10% tax rounding, promotions.</span>
+                <span lang="vi">Phụ trách kiểm thử bước xác thực và thanh toán cho các phương thức thanh toán mới trên những luồng được giao, gồm <strong>thẻ tín dụng GMO (<span class="nw">3-D</span> Secure)</strong> và <strong>Amazon Pay</strong>: hoàn tiền, huỷ đơn, làm tròn thuế 8%/10%, khuyến mãi.</span>
               </li>
               <li>
-                <span lang="en">Tested <strong>two B2C e-commerce web &amp; mobile products</strong> (15 and 4 months) in teams of 15–30 people with 4–9 QCs.</span>
-                <span lang="vi">Kiểm thử <strong>hai sản phẩm thương mại điện tử B2C trên web &amp; mobile</strong> (15 và 4 tháng) trong các nhóm 15–30 người với 4–9 QC.</span>
+                <span lang="en">Tested <strong>two B2C <span class="nw">e-commerce</span> web and mobile products</strong>: 15 months with 30 people (9 QC engineers), 4 months with 15 (4 QC engineers).</span>
+                <span lang="vi">Kiểm thử <strong>hai sản phẩm thương mại điện tử B2C trên web và mobile</strong>: 15 tháng trong nhóm 30 người (9 QC) và 4 tháng trong nhóm 15 người (4 QC).</span>
               </li>
               <li class="more">
                 <span lang="en">Ran functional and regression testing each sprint on web and Android/iOS (real devices, DevTools emulator); supported client UAT by investigating issues and verifying fixes on production.</span>
@@ -651,12 +674,12 @@
                 <span lang="vi"><strong>Kiểm thử API bằng Postman</strong>; viết <strong>SQL</strong> (JOIN 4–5 bảng, subquery, GROUP BY/HAVING) trên MySQL và SQL Server để xác minh dữ liệu import CSV và đối soát tổng tiền đơn hàng giữa API và database.</span>
               </li>
               <li class="more">
-                <span lang="en">Reviewed BA documents to identify requirement gaps; maintained test cases/plans in Excel &amp; Google Sheets and tracked defects via Redmine through the full lifecycle.</span>
-                <span lang="vi">Review tài liệu BA để phát hiện thiếu sót trong yêu cầu; duy trì test case/test plan trên Excel &amp; Google Sheets và theo dõi lỗi trên Redmine trong suốt vòng đời lỗi.</span>
+                <span lang="en">Reviewed Business Analyst (BA) documents and raised <strong>176 Q&amp;A items</strong> to BA/BrSE and developers to clarify specs and investigate logic; personally reported <strong>103 defects, 98% valid</strong> (only 2 rejected), tracked in Redmine through the full lifecycle.</span>
+                <span lang="vi">Review tài liệu của Business Analyst (BA) và gửi <strong>176 Q&amp;A</strong> cho BA/BrSE và developer để làm rõ spec và điều tra logic; tự báo cáo <strong>103 lỗi, 98% hợp lệ</strong> (chỉ 2 lỗi bị reject), theo dõi trên Redmine trong suốt vòng đời lỗi.</span>
               </li>
               <li class="more">
-                <span lang="en">Created QA checklist templates, helped document the payment business flow and onboarded a new QC member.</span>
-                <span lang="vi">Tạo mẫu QA checklist, hỗ trợ viết tài liệu luồng nghiệp vụ thanh toán và hướng dẫn một thành viên QC mới hoà nhập.</span>
+                <span lang="en">Maintained test cases and test plans in Excel &amp; Google Sheets; created QA checklist templates, helped document the payment business flow and onboarded a new QC member.</span>
+                <span lang="vi">Duy trì test case và test plan trên Excel &amp; Google Sheets; tạo mẫu QA checklist, hỗ trợ viết tài liệu luồng thanh toán và hướng dẫn một QC mới.</span>
               </li>
             </ul>
             <button class="more-btn" type="button" aria-expanded="false"><span class="l-more"><span lang="en">Read more</span><span lang="vi">Xem thêm</span></span><span class="l-less"><span lang="en">Show less</span><span lang="vi">Thu gọn</span></span></button>
@@ -685,21 +708,21 @@
               <p class="project-role muted"><span lang="en">Role: QA / Developer · Solo project</span><span lang="vi">Vai trò: QA / Developer · Thực hiện độc lập</span></p>
             </div>
             <p>
-              <span lang="en">Self-built Chrome extension that records a tester's actions and replays them as regression tests, with a pass/fail result and a ready-to-paste bug report.</span>
+              <span lang="en"><span class="nw">Self-built</span> Chrome extension that records a tester's actions and replays them as regression tests, with a pass/fail result and a <span class="nw">ready-to-paste</span> bug report.</span>
               <span lang="vi">Tiện ích Chrome tự xây dựng, ghi lại thao tác của tester rồi phát lại thành các bài kiểm thử hồi quy, kèm kết quả pass/fail và bug report sẵn sàng để dán.</span>
             </p>
             <ul class="checks more">
               <li>
-                <span lang="en">17 action types (iframes, assertions, conditions, branching); data-driven (CSV), sequenced and scheduled runs.</span>
+                <span lang="en">17 action types (iframes, assertions, conditions, branching); <span class="nw">data-driven</span> (CSV), sequenced and scheduled runs.</span>
                 <span lang="vi">17 loại hành động (iframe, assertion, điều kiện, rẽ nhánh); chạy theo dữ liệu (CSV), chạy tuần tự và theo lịch.</span>
               </li>
               <li>
                 <span lang="en">Reports each run as Passed / Failed / Test broken, with a Markdown bug report (repro steps, screenshot), image diff and XLSX/HTML/ZIP export.</span>
-                <span lang="vi">Báo cáo mỗi lần chạy theo trạng thái Passed / Failed / Test broken, kèm bug report Markdown (các bước tái hiện, ảnh chụp màn hình), so sánh ảnh (image diff) và xuất XLSX/HTML/ZIP.</span>
+                <span lang="vi">Báo cáo mỗi lần chạy theo trạng thái Passed / Failed / Test broken, kèm bug report Markdown (bước tái hiện, ảnh chụp màn hình), image diff và xuất&nbsp;XLSX/HTML/ZIP.</span>
               </li>
               <li>
-                <span lang="en">Built-in test design (Equivalence Partitioning, Boundary Value Analysis, decision tables); exports tests to Selenium (Python, Java), Playwright and Robot Framework.</span>
-                <span lang="vi">Tích hợp thiết kế test (Phân vùng tương đương, Phân tích giá trị biên, bảng quyết định); xuất test sang Selenium (Python, Java), Playwright và Robot Framework.</span>
+                <span lang="en"><span class="nw">Built-in</span> test design (Equivalence Partitioning, Boundary Value Analysis, decision tables); generates Selenium, Playwright, Robot Framework scripts.</span>
+                <span lang="vi">Tích hợp thiết kế test (Phân vùng tương đương, Phân tích giá trị biên, bảng quyết định); sinh script Selenium, Playwright và Robot Framework.</span>
               </li>
             </ul>
             <div class="project-foot">
@@ -729,7 +752,7 @@
               <p class="project-role muted"><span lang="en">Role: QA · Solo project</span><span lang="vi">Vai trò: QA · Thực hiện độc lập</span></p>
             </div>
             <p>
-              <span lang="en">Tested an online e-commerce platform: Functional, UI, Performance and API testing; automated selected regression cases.</span>
+              <span lang="en">Tested an online <span class="nw">e-commerce</span> platform: Functional, UI, Performance and API testing; automated selected regression cases.</span>
               <span lang="vi">Kiểm thử một nền tảng thương mại điện tử trực tuyến: kiểm thử chức năng, UI, hiệu năng và API; tự động hoá một số test case hồi quy chọn lọc.</span>
             </p>
             <div class="project-foot">
@@ -756,7 +779,7 @@
           <div class="card skill reveal">
             <h3><span lang="en">Testing types</span><span lang="vi">Loại kiểm thử</span></h3>
             <p class="hint"><span lang="en">Core expertise</span><span lang="vi">Chuyên môn chính</span></p>
-            <ul class="tags"><li>Manual Testing</li><li>API Testing</li><li>Database Testing</li><li>Mobile Testing</li><li>Regression</li><li>UI</li><li>UAT</li></ul>
+            <ul class="tags"><li>Manual Testing</li><li>API Testing</li><li>Database Testing</li><li>Mobile Testing</li><li>Regression</li><li>UI</li><li>UAT support</li></ul>
           </div>
           <div class="card skill reveal">
             <h3><span lang="en">Testing &amp; tracking</span><span lang="vi">Công cụ kiểm thử &amp; quản lý lỗi</span></h3>
@@ -769,6 +792,11 @@
             <ul class="tags"><li>Playwright</li><li>Selenium</li></ul>
           </div>
           <div class="card skill more reveal">
+            <h3><span lang="en">Test design</span><span lang="vi">Thiết kế test</span></h3>
+            <p class="hint"><span lang="en">Test case design techniques</span><span lang="vi">Kỹ thuật thiết kế test case</span></p>
+            <ul class="tags"><li><span lang="en">Equivalence Partitioning</span><span lang="vi">Phân vùng tương đương</span></li><li><span lang="en">Boundary Value Analysis</span><span lang="vi">Phân tích giá trị biên</span></li><li><span lang="en">Decision Tables</span><span lang="vi">Bảng quyết định</span></li></ul>
+          </div>
+          <div class="card skill more reveal">
             <h3><span lang="en">Code &amp; databases</span><span lang="vi">Lập trình &amp; cơ sở dữ liệu</span></h3>
             <p class="hint"><span lang="en">Languages, databases &amp; version control</span><span lang="vi">Ngôn ngữ, CSDL &amp; quản lý phiên bản</span></p>
             <ul class="tags"><li>JavaScript</li><li>C#</li><li>Python</li><li>MySQL</li><li>SQL Server</li><li>Git</li></ul>
@@ -777,11 +805,6 @@
             <h3><span lang="en">Tools from training</span><span lang="vi">Công cụ từ khoá đào tạo</span></h3>
             <p class="hint"><span lang="en">Used in the Tool Shop training project</span><span lang="vi">Dùng trong dự án đào tạo Tool Shop</span></p>
             <ul class="tags"><li>Katalon</li><li>JMeter</li><li>BrowserStack</li></ul>
-          </div>
-          <div class="card skill more reveal">
-            <h3><span lang="en">Languages</span><span lang="vi">Ngoại ngữ</span></h3>
-            <p class="hint"><span lang="en">Working language</span><span lang="vi">Ngôn ngữ làm việc</span></p>
-            <ul class="tags"><li><span lang="en">English – Intermediate (reading specifications)</span><span lang="vi">Tiếng Anh – Trung cấp (đọc tài liệu đặc tả)</span></li></ul>
           </div>
         </div>
         <button class="more-btn" type="button" aria-expanded="false"><span class="l-more"><span lang="en">Read more</span><span lang="vi">Xem thêm</span></span><span class="l-less"><span lang="en">Show less</span><span lang="vi">Thu gọn</span></span></button>
@@ -798,13 +821,15 @@
       </div>
       <article class="card edu reveal">
         <div class="edu-icon"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/></svg></div>
-        <div class="edu-main">
-          <div class="tl-head">
-            <h3><span lang="en">VNUHCM – University of Science (HCMUS)</span><span lang="vi">Trường ĐH Khoa học Tự nhiên – ĐHQG-HCM (HCMUS)</span></h3>
+        <div class="edu-body">
+          <div class="tl-head edu-head">
+            <h3><span lang="en">University of Science – <span class="nw">VNU-HCM (HCMUS)</span></span><span lang="vi">Trường ĐH Khoa học Tự nhiên – <span class="nw">ĐHQG-HCM (HCMUS)</span></span></h3>
             <span class="date">2021 – 2025</span>
           </div>
-          <p class="company"><span lang="en">B.Sc. in Information Technology</span><span lang="vi">Cử nhân Công nghệ Thông tin</span></p>
-          <p class="muted"><span lang="en">Graduated 10/2025</span><span lang="vi">Tốt nghiệp 10/2025</span></p>
+          <div class="edu-main">
+            <p class="company"><span lang="en">B.Sc. in Information Technology</span><span lang="vi">Cử nhân Công nghệ Thông tin</span></p>
+            <p class="muted"><span lang="en">Graduated 10/2025</span><span lang="vi">Tốt nghiệp 10/2025</span></p>
+          </div>
         </div>
         <div class="tl-body edu-side">
           <span class="label"><span lang="en">Relevant coursework</span><span lang="vi">Môn học liên quan</span></span>
@@ -921,7 +946,33 @@
       }).catch(() => {});   // animation skipped (e.g. clicked again mid-way): the switch still happens
       t.finished.finally(() => delete d.dataset.vt);
     };
-    $('#lang-btn').addEventListener('click', () => animate('lang', () => { d.lang = d.lang === 'vi' ? 'en' : 'vi'; save('lang', d.lang); syncTitle(); }));
+    // Language switch without jumps. Scroll anchoring is off while the text swaps: it would follow a line
+    // that re-centres inside its section and drag the page by that much.
+    const noAnchor = () => { d.style.overflowAnchor = 'none'; requestAnimationFrame(() => requestAnimationFrame(() => d.style.overflowAnchor = '')); };
+    // Same footprint in both languages, so a switch never moves anything: the name, menu links, buttons,
+    // hero stats, About facts card and school name keep the width of their wider language; the facts rows and the
+    // Education card the height of their taller one; and each section the height of its taller language
+    // (else it would move the sections below, or flip its content from centred to top-aligned).
+    const sections = [...$$('main section')], labelled = [...$$('.brand, #lang-btn, .nav-links a, .btn, .stats li, .facts, .edu-head')];
+    const rows = [...$$('.facts > div, .edu, .edu-side')];
+    const larger = (els, size) => {
+      const v = els.map(size), lang = d.lang;
+      d.lang = lang === 'vi' ? 'en' : 'vi'; els.forEach((e, i) => v[i] = Math.max(v[i], size(e))); d.lang = lang;
+      return v;
+    };
+    const evenOut = () => {
+      noAnchor();
+      labelled.forEach(e => e.style.minWidth = ''); [...rows, ...sections].forEach(e => e.style.minHeight = '');
+      larger(labelled, e => e.getBoundingClientRect().width).forEach((w, i) => labelled[i].style.minWidth = w + 'px');
+      larger(rows, e => e.getBoundingClientRect().height).forEach((h, i) => rows[i].style.minHeight = h + 'px');
+      larger(sections, s => s.getBoundingClientRect().height).forEach((h, i) => sections[i].style.minHeight = h + 'px');
+    };
+    let evenQueued = false;
+    const queueEven = () => { if (!evenQueued) { evenQueued = true; requestAnimationFrame(() => { evenQueued = false; evenOut(); }); } };
+    evenOut();
+    document.fonts.ready.then(evenOut);
+    addEventListener('resize', queueEven);
+    $('#lang-btn').addEventListener('click', () => animate('lang', () => { noAnchor(); d.lang = d.lang === 'vi' ? 'en' : 'vi'; save('lang', d.lang); syncTitle(); }));
     $('#theme-btn').addEventListener('click', () => animate('theme', () => { d.dataset.theme = d.dataset.theme === 'dark' ? 'light' : 'dark'; save('theme', d.dataset.theme); }));
 
     // Mobile menu
@@ -934,6 +985,7 @@
     // "Read more" toggles on small screens
     $$('.more-btn').forEach(b => b.addEventListener('click', () => {
       b.setAttribute('aria-expanded', b.closest('.collapsible').classList.toggle('expanded'));
+      evenOut();   // the section's content just grew or shrank
     }));
 
     // Hero illustration: random each visit, never the same one twice in a row
