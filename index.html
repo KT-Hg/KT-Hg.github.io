@@ -951,10 +951,11 @@
     const noAnchor = () => { d.style.overflowAnchor = 'none'; requestAnimationFrame(() => requestAnimationFrame(() => d.style.overflowAnchor = '')); };
     // Same footprint in both languages, so a switch never moves anything: the name, menu links, buttons,
     // hero stats, About facts card and school name keep the width of their wider language; the facts rows and the
-    // Education card the height of their taller one; and each section the height of its taller language
+    // Education card the height of their taller one; each section's content block too, so its centred heading
+    // never slides; and each section the height of its taller language
     // (else it would move the sections below, or flip its content from centred to top-aligned).
     const sections = [...$$('main section')], labelled = [...$$('.brand, #lang-btn, .nav-links a, .btn, .stats li, .facts, .edu-head')];
-    const rows = [...$$('.facts > div, .edu, .edu-side')];
+    const rows = [...$$('.facts > div, .edu, .edu-side')], blocks = [...$$('main section:not(.hero) > .container')];
     const larger = (els, size) => {
       const v = els.map(size), lang = d.lang;
       d.lang = lang === 'vi' ? 'en' : 'vi'; els.forEach((e, i) => v[i] = Math.max(v[i], size(e))); d.lang = lang;
@@ -962,9 +963,10 @@
     };
     const evenOut = () => {
       noAnchor();
-      labelled.forEach(e => e.style.minWidth = ''); [...rows, ...sections].forEach(e => e.style.minHeight = '');
+      labelled.forEach(e => e.style.minWidth = ''); [...rows, ...blocks, ...sections].forEach(e => e.style.minHeight = '');
       larger(labelled, e => e.getBoundingClientRect().width).forEach((w, i) => labelled[i].style.minWidth = w + 'px');
       larger(rows, e => e.getBoundingClientRect().height).forEach((h, i) => rows[i].style.minHeight = h + 'px');
+      larger(blocks, e => e.getBoundingClientRect().height).forEach((h, i) => blocks[i].style.minHeight = h + 'px');
       larger(sections, s => s.getBoundingClientRect().height).forEach((h, i) => sections[i].style.minHeight = h + 'px');
     };
     let evenQueued = false;
